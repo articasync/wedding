@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin · Mariam &amp; Chris</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400;500&display=swap">
+<style>
+:root{--paper:#FAFAF7;--ink:#111111;--mute:#555555;--tint:#EFEEE8;--display:'Bodoni Moda','Didot',Georgia,serif;--sans:'Jost','Avenir Next','Helvetica Neue',Arial,sans-serif;--pad:clamp(20px,4.6vw,56px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55}
+h1,h2,p{margin:0}
+[hidden]{display:none !important}
+a{color:inherit;text-underline-offset:5px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+.label{font-size:13px;letter-spacing:.24em;text-transform:uppercase;line-height:1.5}
+.wrap{padding:clamp(24px,4vw,48px) var(--pad) 72px;max-width:1400px;margin:0 auto}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
+.head h1{font-family:var(--display);font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.95;letter-spacing:-.02em}
+.head h1 i{font-style:italic}
+.btn{display:inline-block;background:var(--ink);color:var(--paper);border:1px solid var(--ink);padding:15px 24px;font-size:13px;letter-spacing:.24em;text-transform:uppercase;text-decoration:none;text-align:center;cursor:pointer}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+.btn[disabled]{opacity:.5;cursor:default}
+.link{background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:5px}
+label,legend{font-size:13px;letter-spacing:.22em;text-transform:uppercase;padding:0}
+input[type=text],input[type=password],input[type=email],textarea,select{font:inherit;font-size:18px;color:var(--ink);background:transparent;border:0;border-bottom:1px solid var(--ink);border-radius:0;padding:10px 0;width:100%}
+textarea{min-height:170px;resize:vertical;line-height:1.45;border:1px solid var(--ink);padding:12px}
+input:focus-visible,select:focus-visible{outline:0;border-bottom-width:3px;padding-bottom:8px}
+.field{display:flex;flex-direction:column;gap:6px}
+.note{color:var(--mute);font-size:15px}
+.msg{min-height:1.6em}
+.msg.err,.msg.ok{border-left:3px solid var(--ink);padding-left:12px}
+
+.login{max-width:440px;display:flex;flex-direction:column;gap:22px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--ink);margin-bottom:40px}
+.stats > div{padding:18px 20px;border-right:1px solid var(--ink)}
+.stats > div:last-child{border-right:0}
+.stats .n{font-family:var(--display);font-size:clamp(40px,5vw,68px);line-height:1}
+.stats > div:nth-child(even) .n{font-style:italic}
+.cols{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(28px,4vw,56px);align-items:start}
+.panel h2{font-family:var(--display);font-weight:400;font-style:italic;font-size:clamp(30px,3.4vw,44px);line-height:1;margin-bottom:20px}
+.compose{display:flex;flex-direction:column;gap:22px}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.seg label{position:relative;display:block;cursor:pointer;letter-spacing:.24em}
+.seg input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.seg span{display:block;border:1px solid var(--ink);padding:14px;text-align:center}
+.seg input:checked + span{background:var(--ink);color:var(--paper)}
+.seg input:focus-visible + span{outline:2px solid var(--ink);outline-offset:4px}
+.confirm{border:1px solid var(--ink);padding:18px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.filters{display:flex;gap:6px 18px;flex-wrap:wrap;margin-bottom:14px}
+.filters button[aria-pressed="true"]{text-decoration-thickness:3px;font-weight:500}
+.scroll{overflow-x:auto;border:1px solid var(--ink)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--ink)}
+tr:last-child td{border-bottom:0}
+th{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;background:var(--tint)}
+td.addr,td.nt{white-space:pre-line;max-width:240px}
+@media (max-width:960px){.cols{grid-template-columns:minmax(0,1fr)}.stats{grid-template-columns:1fr 1fr}.stats > div:nth-child(2){border-right:0}.stats > div:nth-child(-n+2){border-bottom:1px solid var(--ink)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <h1>Guest <i>desk</i></h1>
+    <div class="row">
+      <a class="label" href="./">Back to the site</a>
+      <button type="button" class="label link" id="logout" hidden>Sign out</button>
+    </div>
+  </header>
+
+  <!-- sign in -->
+  <form class="login" id="login">
+    <p id="login-intro">Sign in to see replies and send updates to your guests.</p>
+    <div class="field" id="pw-field">
+      <label for="pw">Admin password</label>
+      <input id="pw" type="password" autocomplete="current-password" required>
+    </div>
+    <p class="msg" id="login-msg" role="status" aria-live="polite"></p>
+    <div><button class="btn" type="submit" id="login-btn">Sign in</button></div>
+  </form>
+
+  <!-- dashboard -->
+  <div id="dash" hidden>
+    <p class="msg ok" id="demo-note" hidden>Preview mode with sample guests. Nothing here is real and nothing will be sent.</p>
+    <div class="stats" aria-label="Reply totals" style="margin-top:20px">
+      <div><div class="n" id="s-yes">0</div><div class="label">Attending (people)</div></div>
+      <div><div class="n" id="s-no">0</div><div class="label">Declined (replies)</div></div>
+      <div><div class="n" id="s-wait">0</div><div class="label">Yet to reply</div></div>
+      <div><div class="n" id="s-all">0</div><div class="label">Replies in total</div></div>
+    </div>
+
+    <div class="cols">
+      <!-- compose -->
+      <section class="panel" aria-labelledby="h-send">
+        <h2 id="h-send">Send an update</h2>
+        <form class="compose" id="compose" novalidate>
+          <fieldset>
+            <legend>How</legend>
+            <div class="seg">
+              <label><input type="radio" name="channel" value="email" checked><span>Email</span></label>
+              <label><input type="radio" name="channel" value="sms"><span>Text</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="aud">To</label>
+            <select id="aud" name="audience">
+              <option value="all">Everyone (guest list + replies)</option>
+              <option value="yes">Attending</option>
+              <option value="no">Declined</option>
+              <option value="pending">Yet to reply (from the Guests tab)</option>
+              <option value="test">Test: just me</option>
+            </select>
+            <p class="note" id="aud-count" aria-live="polite"></p>
+          </div>
+          <div class="field" id="test-field" hidden>
+            <label for="test-to" id="test-label">Your email address</label>
+            <input id="test-to" type="text" autocomplete="off">
+          </div>
+          <div class="field" id="subject-field">
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" maxlength="200">
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" maxlength="5000"></textarea>
+            <p class="note" id="msg-note">Write {name} to greet each guest by first name.</p>
+          </div>
+          <p class="note" id="limits"></p>
+          <p class="msg" id="send-msg" role="status" aria-live="polite"></p>
+          <div id="send-row"><button class="btn" type="submit" id="review">Review and send</button></div>
+          <div class="confirm" id="confirm" hidden>
+            <p id="confirm-text"></p>
+            <div class="row">
+              <button type="button" class="btn" id="send-now">Yes, send it</button>
+              <button type="button" class="btn ghost" id="cancel">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- replies -->
+      <section class="panel" aria-labelledby="h-replies">
+        <h2 id="h-replies">Replies</h2>
+        <div class="filters label" role="group" aria-label="Filter replies">
+          <button type="button" class="link" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="link" data-filter="yes" aria-pressed="false">Attending</button>
+          <button type="button" class="link" data-filter="no" aria-pressed="false">Declined</button>
+          <button type="button" class="link" id="csv">Download CSV</button>
+          <button type="button" class="link" id="refresh">Refresh</button>
+        </div>
+        <div class="scroll" tabindex="0" role="region" aria-label="Replies table">
+          <table>
+            <thead><tr><th scope="col">Name</th><th scope="col">Reply</th><th scope="col">Party</th><th scope="col">Email</th><th scope="col">Mobile</th><th scope="col">Address</th><th scope="col">Note</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <p class="note" id="rows-note" style="margin-top:12px"></p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  'use strict';
+  var BACKEND = (window.WEDDING_CONFIG && window.WEDDING_CONFIG.BACKEND_URL) || '';
+  var DEMO = !BACKEND;
+  var $ = function (id) { return document.getElementById(id); };
+  var password = '';              // kept in memory only; signing out or closing the tab forgets it
+  var data = { rsvps: [], guests: [], emailQuota: 0, smsReady: false };
+  var filter = 'all';
+
+  var SAMPLE = {
+    rsvps: [
+      { when: '2026-11-10T15:00:00Z', name: 'Sample Guest One', email: 'one@example.com', phone: '(555) 010-0001', address: '1 Sample Street\nNew York, NY 10001', attending: 'yes', party: 2, note: 'Vegetarian, please.' },
+      { when: '2026-11-11T15:00:00Z', name: 'Sample Guest Two', email: 'two@example.com', phone: '', address: '2 Sample Avenue\nBrooklyn, NY 11201', attending: 'yes', party: 1, note: '' },
+      { when: '2026-11-12T15:00:00Z', name: 'Sample Guest Three', email: 'three@example.com', phone: '(555) 010-0003', address: '3 Sample Road\nChicago, IL 60601', attending: 'no', party: 0, note: 'So sorry to miss it!' }
+    ],
+    guests: [
+      { name: 'Sample Guest One', email: 'one@example.com', phone: '(555) 010-0001' },
+      { name: 'Sample Guest Four', email: 'four@example.com', phone: '(555) 010-0004' },
+      { name: 'Sample Guest Five', email: 'five@example.com', phone: '' }
+    ],
+    emailQuota: 100, smsReady: false
+  };
+
+  function api(payload) {
+    payload.password = password;
+    return fetch(BACKEND, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json(); })
+      .then(function (res) { if (!res || !res.ok) throw new Error((res && res.error) || 'Something went wrong.'); return res; });
+  }
+  function say(node, text, kind) { node.textContent = text || ''; node.className = 'msg' + (kind ? ' ' + kind : ''); }
+  function friendly(err) {
+    var m = (err && err.message) || '';
+    return /fetch|network|json|unexpected token/i.test(m) ? 'Couldn’t reach the Google Sheet. Check your connection and the BACKEND_URL in config.js.' : m;
+  }
+
+  /* ----- same rules as the Apps Script, so the count you see is the count that sends ----- */
+  function isEmail(s) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(s || '')); }
+  function normalizePhone(raw) {
+    var s = String(raw == null ? '' : raw).trim();
+    if (!s) return '';
+    var plus = s.charAt(0) === '+', digits = s.replace(/\D/g, '');
+    if (plus && digits.length >= 8 && digits.length <= 15) return '+' + digits;
+    if (digits.length === 10) return '+1' + digits;
+    if (digits.length === 11 && digits.charAt(0) === '1') return '+' + digits;
+    return '';
+  }
+  function recipients(audience, channel, testTo) {
+    var key = channel === 'sms' ? 'phone' : 'email', people = [];
+    if (audience === 'test') { var p = { name: 'Test' }; p[key] = String(testTo || ''); people = [p]; }
+    else if (audience === 'yes' || audience === 'no') people = data.rsvps.filter(function (r) { return r.attending === audience; });
+    else if (audience === 'pending') {
+      var answered = {};
+      data.rsvps.forEach(function (r) {
+        if (r.email) answered['e:' + r.email.toLowerCase().trim()] = true;
+        var ph = normalizePhone(r.phone); if (ph) answered['p:' + ph] = true;
+      });
+      people = data.guests.filter(function (g) {
+        var ph = normalizePhone(g.phone);
+        return !(g.email && answered['e:' + g.email.toLowerCase().trim()]) && !(ph && answered['p:' + ph]);
+      });
+    } else people = data.guests.concat(data.rsvps);
+    var seen = {}, out = [];
+    people.forEach(function (p) {
+      var to = channel === 'sms' ? normalizePhone(p.phone) : String(p.email || '').toLowerCase().trim();
+      if (!to || (channel === 'email' && !isEmail(to)) || seen[to]) return;
+      seen[to] = true; out.push({ to: to, name: p.name });
+    });
+    return out;
+  }
+
+  /* ----- sign in ----- */
+  if (DEMO) {
+    $('login-intro').textContent = 'Preview mode: the site isn’t connected to a Google Sheet yet (BACKEND_URL in config.js is empty). You can look around with sample guests.';
+    $('pw-field').hidden = true; $('pw').required = false;
+    $('login-btn').textContent = 'Open with sample guests';
+  }
+  $('login').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (DEMO) { data = SAMPLE; enter(); return; }
+    password = $('pw').value;
+    $('login-btn').disabled = true; say($('login-msg'), 'Signing in…');
+    api({ action: 'guests' }).then(function (res) {
+      data = res; $('pw').value = ''; say($('login-msg'), ''); enter();
+    }).catch(function (err) {
+      password = ''; say($('login-msg'), friendly(err), 'err');
+    }).then(function () { $('login-btn').disabled = false; });
+  });
+  function enter() {
+    $('login').hidden = true; $('dash').hidden = false; $('logout').hidden = false; $('demo-note').hidden = !DEMO;
+    renderAll();
+  }
+  $('logout').addEventListener('click', function () { password = ''; location.reload(); });
+  $('refresh').addEventListener('click', function () {
+    if (DEMO) return;
+    api({ action: 'guests' }).then(function (res) { data = res; renderAll(); }).catch(function (err) { say($('send-msg'), friendly(err), 'err'); });
+  });
+
+  /* ----- replies ----- */
+  function renderAll() { renderStats(); renderRows(); updateCompose(); }
+  function renderStats() {
+    var yes = data.rsvps.filter(function (r) { return r.attending === 'yes'; });
+    $('s-yes').textContent = yes.reduce(function (n, r) { return n + (Number(r.party) || 1); }, 0);
+    $('s-no').textContent = data.rsvps.length - yes.length;
+    $('s-wait').textContent = recipients('pending', 'email').length;
+    $('s-all').textContent = data.rsvps.length;
+  }
+  function renderRows() {
+    var body = $('rows'); body.textContent = '';
+    var list = data.rsvps.filter(function (r) { return filter === 'all' || r.attending === filter; });
+    list.forEach(function (r) {
+      var tr = document.createElement('tr');
+      [[r.name], [r.attending === 'yes' ? 'Attending' : 'Declined'], [r.attending === 'yes' ? String(r.party || 1) : '–'], [r.email], [r.phone], [r.address, 'addr'], [r.note, 'nt']].forEach(function (c) {
+        var td = document.createElement('td'); td.textContent = c[0] || ''; if (c[1]) td.className = c[1]; tr.appendChild(td);
+      });
+      body.appendChild(tr);
+    });
+    $('rows-note').textContent = list.length ? list.length + (list.length === 1 ? ' reply shown.' : ' replies shown.') : 'No replies here yet.';
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-filter]'), function (b) {
+    b.addEventListener('click', function () {
+      filter = b.getAttribute('data-filter');
+      Array.prototype.forEach.call(document.querySelectorAll('[data-filter]'), function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      renderRows();
+    });
+  });
+  $('csv').addEventListener('click', function () {
+    var cell = function (v) {
+      v = String(v == null ? '' : v);
+      if (/^[=+\-@]/.test(v)) v = "'" + v;           // keep spreadsheets from running it as a formula
+      return '"' + v.replace(/"/g, '""') + '"';
+    };
+    var lines = [['Name', 'Reply', 'Party size', 'Email', 'Mobile', 'Address', 'Note', 'Replied at'].map(cell).join(',')];
+    data.rsvps.forEach(function (r) {
+      lines.push([r.name, r.attending === 'yes' ? 'Yes' : 'No', r.party, r.email, r.phone, r.address, r.note, r.when].map(cell).join(','));
+    });
+    var url = URL.createObjectURL(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+    var a = document.createElement('a'); a.href = url; a.download = 'rsvps.csv'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  });
+
+  /* ----- compose ----- */
+  var form = $('compose');
+  function current() {
+    return {
+      channel: form.elements.channel.value, audience: $('aud').value,
+      subject: $('subject').value.trim(), message: $('message').value.trim(), testTo: $('test-to').value.trim()
+    };
+  }
+  function updateCompose() {
+    var c = current(), sms = c.channel === 'sms';
+    $('subject-field').hidden = sms;
+    $('test-field').hidden = c.audience !== 'test';
+    $('test-label').textContent = sms ? 'Your mobile number' : 'Your email address';
+    var n = recipients(c.audience, c.channel, c.testTo).length;
+    $('aud-count').textContent = n + (n === 1 ? ' person' : ' people') + ' with ' + (sms ? 'a usable mobile number' : 'an email address') + '.';
+    $('limits').textContent = sms
+      ? (data.smsReady ? 'Texts go out through your Twilio number and are billed by Twilio per message.' : 'Texting isn’t set up yet. Add your Twilio details in the Apps Script settings (see README).')
+      : 'Emails come from your Gmail. Google will send ' + data.emailQuota + ' more today.';
+    var len = $('message').value.length;
+    $('msg-note').textContent = 'Write {name} to greet each guest by first name.' + (sms && len ? ' ' + len + ' characters, about ' + Math.max(1, Math.ceil(len / 153)) + ' text segment' + (len > 160 ? 's' : '') + ' each.' : '');
+    hideConfirm();
+  }
+  form.addEventListener('input', updateCompose);
+  form.addEventListener('change', updateCompose);
+  function hideConfirm() { $('confirm').hidden = true; $('send-row').hidden = false; }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var c = current(), list = recipients(c.audience, c.channel, c.testTo);
+    if (c.channel === 'email' && !c.subject) { say($('send-msg'), 'Add a subject line.', 'err'); $('subject').focus(); return; }
+    if (!c.message) { say($('send-msg'), 'Write a message first.', 'err'); $('message').focus(); return; }
+    if (!list.length) { say($('send-msg'), c.audience === 'test' ? 'Enter where to send the test.' : 'Nobody in that group can be reached this way.', 'err'); return; }
+    if (c.channel === 'email' && !DEMO && list.length > data.emailQuota) { say($('send-msg'), 'Google will only send ' + data.emailQuota + ' more emails today and this group has ' + list.length + '. Pick a smaller group or finish tomorrow.', 'err'); return; }
+    say($('send-msg'), '');
+    $('confirm-text').textContent = 'Send this ' + (c.channel === 'sms' ? 'text' : 'email') + ' to ' + list.length + (list.length === 1 ? ' person' : ' people') + '? It can’t be unsent.';
+    $('confirm').hidden = false; $('send-row').hidden = true; $('send-now').focus();
+  });
+  $('cancel').addEventListener('click', function () { hideConfirm(); $('review').focus(); });
+  $('send-now').addEventListener('click', function () {
+    var c = current();
+    if (DEMO) { hideConfirm(); say($('send-msg'), 'Preview mode: nothing was sent.', 'ok'); return; }
+    $('send-now').disabled = true; $('cancel').disabled = true; say($('send-msg'), 'Sending… keep this tab open.');
+    api({ action: 'blast', channel: c.channel, audience: c.audience, subject: c.subject, message: c.message, testTo: c.testTo })
+      .then(function (res) {
+        var text = 'Sent to ' + res.sent + (res.sent === 1 ? ' person.' : ' people.');
+        if (res.failed && res.failed.length) text += ' ' + res.failed.length + ' failed: ' + res.failed.map(function (f) { return f.to; }).join(', ') + '.';
+        say($('send-msg'), text, 'ok');
+        return api({ action: 'guests' }).then(function (fresh) { data = fresh; renderStats(); renderRows(); });
+      })
+      .catch(function (err) { say($('send-msg'), friendly(err), 'err'); })
+      .then(function () { $('send-now').disabled = false; $('cancel').disabled = false; hideConfirm(); });
+  });
+})();
+</script>
+</body>
+</html>
