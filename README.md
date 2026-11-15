@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-# wedding
-# wedding
-# wedding
-=======
 # Mariam & Chris — wedding site
 
 A static site (no build step) in the "Atelier" design.
@@ -52,4 +47,3 @@ Photos: add files to `images/` and set, for example, `img: 'images/paris.jpg'` o
 
 - The gate remembers that a visitor has unlocked it until they close the tab. "Lock the door again" in the footer resets it.
 - Both pages ask search engines not to index them.
->>>>>>> 2b63a17 (Wedding site: Atelier design)
