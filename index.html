@@ -186,6 +186,14 @@ dialog::backdrop{background:rgba(17,17,17,.9)}
 dialog img{display:block;max-width:94vw;max-height:84vh;border:1px solid var(--paper)}
 dialog button{margin-top:12px;background:none;border:0;color:var(--paper);cursor:pointer;padding:8px 0;text-decoration:underline;text-underline-offset:5px}
 
+.share{margin-top:clamp(32px,5vw,64px);border-top:1px solid var(--ink);padding-top:clamp(20px,3vw,32px);display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,5vw,72px);align-items:end}
+.share h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,4.4vw,58px);line-height:1.02;margin-top:10px}
+.share h2 i{font-style:italic}
+.share-note{display:flex;flex-direction:column;gap:18px;max-width:52ch}
+.share .links{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px}
+#tally-frame{display:block;width:100%;min-height:900px;border:0;background:transparent}
+@media (max-width:720px){.share{grid-template-columns:1fr}}
+
 /* ---------- registry ---------- */
 .reg{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:end}
 .reg-count{border-right:1px solid var(--ink);padding-right:clamp(16px,3vw,40px)}
@@ -331,6 +339,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
           <p style="margin-top:14px">You can come back and change your answer any time before February 1 — just use the same email address.</p>
         </div>
         <div>
+          <div id="tally-wrap" hidden><iframe id="tally-frame" title="RSVP form" loading="lazy"></iframe></div>
           <form id="rsvp-form" novalidate>
             <div class="field">
               <label for="f-name">Full name</label>
@@ -357,8 +366,8 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
               </select>
             </div>
             <div class="field">
-              <label for="f-phone">Mobile <small>(optional, for day-of updates)</small></label>
-              <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+              <label for="f-phone">Mobile <small>(for day-of updates)</small></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required maxlength="40">
             </div>
             <div class="field wide" id="guest-fields" hidden>
               <fieldset>
@@ -369,7 +378,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
                     <input id="f-gname" name="guestName" type="text" autocomplete="off" maxlength="120">
                   </div>
                   <div class="field">
-                    <label for="f-gphone">Their mobile <small>(optional)</small></label>
+                    <label for="f-gphone">Their mobile</label>
                     <input id="f-gphone" name="guestPhone" type="tel" autocomplete="off" maxlength="40">
                   </div>
                   <div class="field wide">
@@ -380,8 +389,8 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
               </fieldset>
             </div>
             <div class="field wide">
-              <label for="f-address">Mailing address</label>
-              <textarea id="f-address" name="address" autocomplete="street-address" required maxlength="500" rows="3"></textarea>
+              <label for="f-address">Mailing address <small>(optional)</small></label>
+              <textarea id="f-address" name="address" autocomplete="street-address" maxlength="500" rows="3"></textarea>
             </div>
             <div class="field wide">
               <label for="f-note">A note for us <small>(optional: dietary needs, a song request)</small></label>
@@ -438,6 +447,19 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
         <h1 tabindex="-1"><i>Gallery</i></h1>
       </div>
       <div class="wall" id="wall"></div>
+      <div class="share">
+        <div>
+          <p class="label">Event photos</p>
+          <h2>Were you there? <i>Share your photos.</i></h2>
+        </div>
+        <div class="share-note">
+          <p>If you have photos or videos from the day, we’d love to see them. Add them to our shared album so everyone can relive it.</p>
+          <div class="links">
+            <a class="btn" id="share-btn" target="_blank" rel="noopener" href="#" hidden>Add to our album</a>
+            <span class="label" id="share-soon">Album link coming soon</span>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- registry -->
@@ -790,6 +812,23 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
   }
 
+  /* ---------------- outside services (set in config.js) ---------------- */
+  var CFG = window.WEDDING_CONFIG || {};
+  var photosUrl = String(CFG.PHOTOS_UPLOAD_URL || '').trim();
+  if (/^https:\/\//.test(photosUrl)) {
+    $('share-btn').href = photosUrl; $('share-btn').hidden = false; $('share-soon').hidden = true;
+  }
+  var tallyId = (String(CFG.TALLY_FORM || '').trim().replace(/[?#].*$/, '').replace(/\/+$/, '').split('/').pop() || '').replace(/[^A-Za-z0-9_-]/g, '');
+  if (tallyId) {
+    $('rsvp-form').hidden = true;
+    $('tally-wrap').hidden = false;
+    $('tally-frame').src = 'https://tally.so/embed/' + tallyId + '?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1';
+    var tallyScript = document.createElement('script');
+    tallyScript.src = 'https://tally.so/widgets/embed.js';   // lets the form resize itself to fit
+    tallyScript.async = true;
+    document.body.appendChild(tallyScript);
+  }
+
   /* ---------------- rsvp ---------------- */
   var form = $('rsvp-form'), status = $('rsvp-status'), sendBtn = $('rsvp-send');
   function setStatus(msg, isErr) { status.textContent = msg || ''; status.className = 'status' + (isErr ? ' err' : ''); }
@@ -815,8 +854,9 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     if (!data.name) { setStatus('Please tell us your name.', true); f.name.focus(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) { setStatus('Please enter a valid email address.', true); f.email.focus(); return; }
     if (!data.attending) { setStatus('Please let us know if you can make it.', true); f.attending[0].focus(); return; }
-    if (!data.address) { setStatus('Please add your mailing address.', true); f.address.focus(); return; }
+    if (data.phone.replace(/\D/g, '').length < 7) { setStatus('Please add your mobile number.', true); f.phone.focus(); return; }
     if (plusOne && !data.guestName) { setStatus('Please add your plus one’s name, or choose “Just me”.', true); f.guestName.focus(); return; }
+    if (plusOne && data.guestPhone.replace(/\D/g, '').length < 7) { setStatus('Please add your plus one’s mobile number.', true); f.guestPhone.focus(); return; }
     if (plusOne && data.guestEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.guestEmail)) { setStatus('Please check your plus one’s email address.', true); f.guestEmail.focus(); return; }
 
     if (!BACKEND) {

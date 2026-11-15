@@ -21,6 +21,11 @@ var LOG_HEADERS = ['Timestamp', 'Channel', 'Audience', 'Subject', 'Sent', 'Faile
 var SENDER_NAME = 'Mariam & Chris';
 var MAX_PARTY = 2;
 
+// Leave empty when this script was opened from inside the sheet (Extensions → Apps Script).
+// If the script is a standalone project, paste the spreadsheet's ID here: it is the long code
+// in the sheet's address between /d/ and /edit.
+var SHEET_ID = '';
+
 /** Run this once from the editor: it creates the tabs and headers. */
 function setup() {
   sheet_(RSVP_SHEET, RSVP_HEADERS);
@@ -81,11 +86,13 @@ function saveRsvp_(req) {
   if (!name) throw new Error('Please tell us your name.');
   if (!isEmail_(email)) throw new Error('Please enter a valid email address.');
   if (attending !== 'yes' && attending !== 'no') throw new Error('Please let us know if you can make it.');
-  if (!address) throw new Error('Please add your mailing address.');
+  if (phone.replace(/\D/g, '').length < 7) throw new Error('Please add your mobile number.');
   if (party < 1 || party > MAX_PARTY) party = 1;
   if (attending === 'no') party = 0;
   if (guestEmail && !isEmail_(guestEmail)) throw new Error('Please check your plus one’s email address.');
   if (party < 2) { guestName = ''; guestEmail = ''; guestPhone = ''; }
+  if (party === 2 && !guestName) throw new Error('Please add your plus one’s name.');
+  if (party === 2 && guestPhone.replace(/\D/g, '').length < 7) throw new Error('Please add your plus one’s mobile number.');
 
   var row = [new Date(), name, email, phone, address, attending === 'yes' ? 'Yes' : 'No', party, note, guestName, guestEmail, guestPhone].map(safeCell_);
 
@@ -266,7 +273,7 @@ function sendBlast_(req) {
 /* ---------- helpers ---------- */
 
 function sheet_(name, headers) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(name);
   if (!sh) sh = ss.insertSheet(name);
   if (sh.getLastRow() === 0) {
