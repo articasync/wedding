@@ -125,6 +125,9 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .frame img{width:100%;height:100%;object-fit:cover;display:block}
 .frame svg{position:absolute;inset:0;width:100%;height:100%}
 .frame figcaption{position:absolute;left:14px;bottom:12px;background:var(--paper);padding:4px 10px}
+.moment.wide{grid-template-columns:minmax(0,1fr);gap:clamp(16px,2.4vw,28px)}
+.moment.wide .frame{order:2;aspect-ratio:auto;overflow-x:auto;background:var(--paper)}
+.moment.wide .frame img{height:auto;object-fit:contain;min-width:760px}
 .asked{margin-top:clamp(36px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(20px,3vw,40px)}
 .asked h3{font-family:var(--display);font-weight:400;font-style:italic;font-size:26px;line-height:1.15;margin-bottom:8px}
 @media (max-width:720px){.moment{grid-template-columns:1fr}.moment:nth-child(even) .frame{order:0}}
@@ -326,7 +329,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     <!-- welcome -->
     <section class="page" id="p-welcome" hidden>
       <div class="hero">
-        <h1 tabindex="-1">Welcome<br>to our <i>love</i><br><i>story!</i></h1>
+        <h1 tabindex="-1">We are<br>getting<br><i>married</i></h1>
         <div class="date-col">
           <div class="label">The date</div>
           <div class="n">05</div>
@@ -528,7 +531,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   var WEDDING = new Date('2027-05-14T18:30:00-04:00'); // 6:30 PM New York time
 
   var STORY = [
-    { title: 'A text on New Year’s Day', text: 'He made the first move and texted on New Year’s Day. A few hours later there were dinner plans for that same week — and, as it turned out, for every week after.', img: '', caption: 'Where it began' },
+    { title: 'First text', text: 'I never thought I would meet my partner because of my friend’s rejected Hinge date.', img: 'images/first-text.png', caption: 'Our first messages, November 2018', wide: true },
     { title: 'Sea caves, San Diego', text: 'One of our first dates: bikes, then a tandem kayak through the sea caves. Our guide joked that a few hours in a tandem kayak will test any relationship. He was right, and we made it.', img: '', caption: 'San Diego' },
     { title: 'Five courses in Paris', text: 'We treated ourselves to a five-course dinner in Paris. It was truly magical, and we still talk about it.', img: '', caption: 'Paris' },
     { title: 'Northern Lights, Norway', text: 'We stood under the Northern Lights in Norway one April night. Unforgettable.', img: '', caption: 'Norway' },
@@ -605,8 +608,9 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   STORY.forEach(function (m, i) {
     var frame = el('figure', { class: 'frame' });
     if (m.img) frame.appendChild(el('img', { src: m.img, alt: m.caption || m.title, loading: 'lazy' }));
+    if (m.wide) frame.className += ' wide';
     else { frame.appendChild(svgUse('ph')); frame.appendChild(el('figcaption', { class: 'label', text: (m.caption || 'Photo') + ' · photo to come' })); }
-    $('moments').appendChild(el('article', { class: 'moment' }, [
+    $('moments').appendChild(el('article', { class: 'moment' + (m.wide ? ' wide' : '') }, [
       frame,
       el('div', null, [
         el('div', { class: 'no', 'aria-hidden': 'true', text: pad(i + 1, 2) }),
