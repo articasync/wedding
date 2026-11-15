@@ -186,6 +186,17 @@ dialog::backdrop{background:rgba(17,17,17,.9)}
 dialog img{display:block;max-width:94vw;max-height:84vh;border:1px solid var(--paper)}
 dialog button{margin-top:12px;background:none;border:0;color:var(--paper);cursor:pointer;padding:8px 0;text-decoration:underline;text-underline-offset:5px}
 
+/* ---------- registry ---------- */
+.reg{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:end}
+.reg-count{border-right:1px solid var(--ink);padding-right:clamp(16px,3vw,40px)}
+.reg-count .n{font-family:var(--display);font-size:clamp(120px,22vw,300px);line-height:.82;letter-spacing:-.04em}
+.reg-count .n i{font-style:italic}
+.reg-count .label{margin-top:18px}
+.reg-note{display:flex;flex-direction:column;gap:18px;max-width:52ch}
+.reg-note .big{font-family:var(--display);font-style:italic;font-size:clamp(30px,3.8vw,50px);line-height:1.06}
+.reg-note .links{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;margin-top:10px}
+@media (max-width:720px){.reg{grid-template-columns:1fr}.reg-count{border-right:0;border-bottom:1px solid var(--ink);padding:0 0 20px}}
+
 /* ---------- footer ---------- */
 footer{border-top:1px solid var(--ink);padding:22px var(--pad) 28px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px 24px;flex-wrap:wrap}
 footer .pair{display:flex;align-items:flex-end}
@@ -269,6 +280,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
         <li><a href="#schedule">Schedule</a></li>
         <li><a href="#qa">Q &amp; A</a></li>
         <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#registry">Registry</a></li>
       </ul>
     </nav>
   </header>
@@ -429,6 +441,28 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
       </div>
       <div class="wall" id="wall"></div>
     </section>
+
+    <!-- registry -->
+    <section class="page" id="p-registry" hidden>
+      <div class="page-head">
+        <h1 tabindex="-1"><i>Registry</i></h1>
+        <p class="label">Your presence is the gift</p>
+      </div>
+      <div class="reg">
+        <div class="reg-count">
+          <div class="n">30<i>+</i></div>
+          <p class="label">Countries explored together,<br>and counting</p>
+        </div>
+        <div class="reg-note">
+          <p class="big">Having you with us is the only gift we need.</p>
+          <p>Please don’t feel you need to bring a thing. If you’d still like to mark the occasion, we’re saving for our honeymoon — and after more than thirty countries together, we’d love your help adding the next one to the list.</p>
+          <div class="links">
+            <a class="btn" target="_blank" rel="noopener" href="https://venmo.com/u/mermara">Contribute on Venmo</a>
+            <span class="label">@mermara</span>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
@@ -491,7 +525,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     { q: 'What’s the weather like?', a: 'Welcome to New York, out-of-towners! The weather can change fast, but most days are mild and comfortable — usually between 65–78°F, depending on the season. We recommend bringing a light jacket for cooler evenings. ;)' },
     { q: 'Is the wedding indoors or outdoors?', a: 'Our wedding ceremony is outdoors, but our reception will be in a tent :)' },
     { q: 'Can we use our phones and cameras to take photos during the wedding?', a: 'Absolutely! We’d love for you to snap photos and share them with us. We just ask that you don’t take photos during the ceremony.' },
-    { q: 'Do you have a registry?', a: 'The best gift we could ask for is having you celebrate with us on May 14th! For family and friends who have asked about gifts, we’ve set up a wish-list as well as a Venmo option (@mermara) for cash contributions. No gifts are expected; just your company!' }
+    { q: 'Do you have a registry?', a: 'The best gift we could ask for is having you celebrate with us on May 14th! No gifts are expected; just your company. For family and friends who have asked, our Registry page has a way to contribute to our honeymoon.' }
   ];
 
   // Gallery: { src: 'images/photo.jpg', alt: 'What the photo shows', ratio: '4/5' }
@@ -594,7 +628,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 
   /* ---------------- pages ---------------- */
   // Sections use p-<name> ids so the browser doesn't jump-scroll to them under the sticky header.
-  var PAGES = ['welcome', 'story', 'rsvp', 'schedule', 'qa', 'gallery'];
+  var PAGES = ['welcome', 'story', 'rsvp', 'schedule', 'qa', 'gallery', 'registry'];
   var links = document.querySelectorAll('.top a');
   function show(id, focus) {
     if (PAGES.indexOf(id) < 0) id = 'welcome';

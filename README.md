@@ -4,7 +4,7 @@ A static site (no build step) in the "Atelier" design.
 
 | File | What it is |
 | --- | --- |
-| `index.html` | The whole guest site: drag-to-unlock gate, Welcome, Our Story, RSVP, Schedule, Q&A, Gallery |
+| `index.html` | The whole guest site: drag-to-unlock gate, Welcome, Our Story, RSVP, Schedule, Q&A, Gallery, Registry |
 | `save-the-date.html` | Standalone save-the-date at `/save-the-date`, not linked from the menu: send the arrow into the heart to reveal it |
 | `admin.html` | Guest desk at `/admin`: replies, CSV download, email and text blasts |
 | `config.js` | One setting: the address of your Google Sheet backend |
