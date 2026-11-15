@@ -5,6 +5,7 @@ A static site (no build step) in the "Atelier" design.
 | File | What it is |
 | --- | --- |
 | `index.html` | The whole guest site: drag-to-unlock gate, Welcome, Our Story, RSVP, Schedule, Q&A, Gallery |
+| `save-the-date.html` | Standalone save-the-date at `/save-the-date`, not linked from the menu: send the arrow into the heart to reveal it |
 | `admin.html` | Guest desk at `/admin`: replies, CSV download, email and text blasts |
 | `config.js` | One setting: the address of your Google Sheet backend |
 | `google-apps-script/Code.gs` | The backend. It is pasted into Google Sheets, not deployed to Vercel |
@@ -23,7 +24,7 @@ Push these files to the root of the GitHub repo that Vercel deploys. There is no
 5. **Deploy → New deployment → Web app**. Execute as: **Me**. Who has access: **Anyone**. Deploy and copy the **Web app URL**.
 6. Paste that URL into `config.js` as `BACKEND_URL`, then commit and push.
 
-After that, each reply on the RSVP page becomes a row in the `RSVPs` tab (name, email, mobile, address, yes/no, party size, note). A guest who replies again with the same email updates their row.
+After that, each reply on the RSVP page becomes a row in the `RSVPs` tab (name, email, mobile, address, yes/no, party size, note, and the plus one's name, email and mobile). A guest who replies again with the same email updates their row.
 
 If you edit `Code.gs` later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
 

@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Save the date · Mariam &amp; Chris</title>
+<meta name="description" content="Save the date: Mariam and Chris, May 14, 2027, New York.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#FAFAF7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Jost:wght@300;400;500&family=Aref+Ruqaa&display=swap">
+<style>
+:root{--paper:#FAFAF7;--ink:#111111;--wine:#6D1A2B;--display:'Bodoni Moda','Didot','Bodoni MT',Georgia,serif;--sans:'Jost','Avenir Next','Helvetica Neue',Arial,sans-serif;--pad:clamp(20px,4.6vw,56px)}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;overflow:hidden}
+[hidden]{display:none !important}
+button{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ink);outline-offset:6px}
+h1:focus{outline:none}
+.label{font-size:13px;letter-spacing:.28em;text-transform:uppercase;line-height:1.5}
+.stage{position:relative;height:100vh;height:100dvh;display:flex;flex-direction:column;padding:clamp(18px,4vh,40px) var(--pad);overflow:hidden}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.top .label,.bismillah{white-space:nowrap}
+.bismillah{font-family:'Aref Ruqaa','Amiri','Scheherazade New','Traditional Arabic',serif;font-size:clamp(20px,2.4vw,26px);line-height:1.3}
+
+/* ---- the game ---- */
+.play{flex:1;display:flex;flex-direction:column;min-height:0;touch-action:none;-webkit-user-select:none;user-select:none}
+.range{position:relative;flex:1;min-height:240px}
+.heart{position:absolute;left:50%;top:6%;width:clamp(84px,15vh,150px);height:clamp(84px,15vh,150px);margin-left:calc(clamp(84px,15vh,150px) / -2);animation:beat 1.5s ease-in-out infinite}
+.heart svg{display:block;width:100%;height:100%}
+@keyframes beat{0%,100%{transform:scale(1)}18%{transform:scale(1.09)}36%{transform:scale(1)}}
+.arrow{position:absolute;left:50%;bottom:0;width:64px;height:clamp(110px,24vh,190px);margin-left:-32px;padding:0;border:0;background:none;cursor:grab;touch-action:none}
+.arrow:active{cursor:grabbing}
+.arrow svg{display:block;width:100%;height:100%;pointer-events:none}
+.hint{text-align:center;padding-top:14px;border-top:1px solid var(--ink);margin-top:14px}
+.boom .heart{animation:pop .45s ease-out forwards}
+@keyframes pop{to{transform:scale(2.6);opacity:0}}
+.boom .arrow{opacity:0;transition:opacity .15s}
+.bits{position:absolute;left:50%;top:0;width:0;height:0;pointer-events:none}
+.bit{position:absolute;left:0;top:0;width:var(--s);height:var(--s);margin:calc(var(--s) / -2);opacity:0;animation:fly var(--t) cubic-bezier(.15,.7,.3,1) forwards}
+.bit svg{display:block;width:100%;height:100%}
+@keyframes fly{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.4)}70%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r)) scale(1)}}
+
+/* ---- the message ---- */
+.card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.6vh,26px);padding:clamp(70px,12vh,110px) var(--pad) clamp(24px,5vh,48px);text-align:center;animation:burst .9s cubic-bezier(.2,1.35,.35,1) both}
+@keyframes burst{from{opacity:0;transform:scale(.3)}}
+.card h1{margin:0;font-family:var(--display);font-weight:400;font-size:clamp(46px,min(13vw,17vh),150px);line-height:.92;letter-spacing:-.03em}
+.card h1 i{font-style:italic}
+.card h1 .amp{font-size:.4em;letter-spacing:0;vertical-align:middle;margin:0 .25em}
+.card .date{font-family:var(--display);font-size:clamp(34px,min(8vw,9vh),76px);line-height:1}
+.card .date i{color:var(--wine)}
+.rule{width:min(320px,60%);border-top:1px solid var(--ink)}
+.links{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:6px}
+.btn{display:inline-block;background:var(--ink);color:var(--paper);border:1px solid var(--ink);padding:17px 26px;font-size:13px;letter-spacing:.28em;text-transform:uppercase;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+@media (max-width:720px){.label{font-size:12px;letter-spacing:.22em}.top .label{display:none}.card h1{font-size:clamp(56px,min(21vw,15vh),110px)}.card h1 i{display:block}.card h1 .amp{margin-left:0}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="top">
+    <div class="bismillah" lang="ar" dir="rtl">بسم الله الرحمن الرحيم</div>
+    <div class="label">A note for you</div>
+  </div>
+
+  <div class="play" id="play">
+    <div class="range" id="range">
+      <div class="bits" id="bits" aria-hidden="true"></div>
+      <div class="heart" id="heart" aria-hidden="true">
+        <svg viewBox="0 0 34 34"><path d="M17 31 C3 20 1 12.5 4.5 7.5 C8 2.5 14.2 3.6 17 9 C19.8 3.6 26 2.5 29.5 7.5 C33 12.5 31 20 17 31Z" fill="#6D1A2B"/></svg>
+      </div>
+      <button type="button" class="arrow" id="arrow" aria-label="Send the arrow into the heart to open your note">
+        <svg viewBox="0 0 64 190" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+          <line x1="32" y1="14" x2="32" y2="178" stroke="#111111" stroke-width="2"/>
+          <path d="M32 2 L22 26 L32 20 L42 26 Z" fill="#111111"/>
+          <path d="M32 150 L20 162 M32 160 L20 172 M32 170 L20 182 M32 150 L44 162 M32 160 L44 172 M32 170 L44 182" stroke="#111111" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <p class="label hint" id="hint">Send the arrow into the heart</p>
+  </div>
+
+  <section class="card" id="card" hidden aria-live="polite">
+    <p class="label">Save the date</p>
+    <h1 tabindex="-1" id="names"><i>Mariam</i><span class="amp">&amp;</span>Chris</h1>
+    <div class="rule" aria-hidden="true"></div>
+    <p class="date">05 <i>.</i> 14 <i>.</i> 2027</p>
+    <p class="label">New York<br>Formal invitation to follow</p>
+    <div class="links">
+      <a class="btn" href="./">Visit our website</a>
+      <a class="btn ghost" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Mariam+%26+Chris+%E2%80%94+Wedding&amp;dates=20270514/20270515&amp;location=New+York%2C+NY&amp;details=Save+the+date.+Formal+invitation+to+follow.">Add to calendar</a>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var play = $('play'), range = $('range'), arrow = $('arrow'), heart = $('heart'), bits = $('bits'), card = $('card');
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var up = 0;        // how far the arrow has travelled upward, in px
+  var done = false;
+
+  // Distance the arrow tip must travel to reach the middle of the heart.
+  function goal() {
+    var r = range.getBoundingClientRect(), h = heart.getBoundingClientRect(), a = arrow.getBoundingClientRect();
+    return Math.max(20, (a.top + up) - (h.top + h.height * 0.55));
+  }
+  function draw() { arrow.style.transform = 'translateY(' + (-up) + 'px)'; }
+  function set(v) {
+    if (done) return;
+    var g = goal();
+    up = Math.max(0, Math.min(g, v));
+    draw();
+    if (up >= g - 1) hit();
+  }
+  function shoot() {
+    if (done) return;
+    if (reduced) { hit(); return; }
+    var from = up, to = goal(), t0 = null, dur = 380;
+    function step(t) {
+      if (done) return;
+      if (t0 === null) t0 = t;
+      var k = Math.min(1, (t - t0) / dur);
+      set(from + (to - from) * k * k);
+      if (k < 1 && !done) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function hit() {
+    if (done) return;
+    done = true;
+    var r = range.getBoundingClientRect(), h = heart.getBoundingClientRect();
+    bits.style.top = (h.top - r.top + h.height / 2) + 'px';
+    if (!reduced) scatter();
+    play.classList.add('boom');
+    setTimeout(function () {
+      play.hidden = true;
+      card.hidden = false;
+      $('names').focus({ preventScroll: true });
+    }, reduced ? 0 : 420);
+  }
+
+  var HEART = '<svg viewBox="0 0 34 34"><path d="M17 31 C3 20 1 12.5 4.5 7.5 C8 2.5 14.2 3.6 17 9 C19.8 3.6 26 2.5 29.5 7.5 C33 12.5 31 20 17 31Z" fill="{c}"/></svg>';
+  var DIAMOND = '<svg viewBox="0 0 20 20"><path d="M10 0 L20 10 L10 20 L0 10Z" fill="{c}"/></svg>';
+  function scatter() {
+    var reach = Math.max(window.innerWidth, window.innerHeight) * 0.6;
+    for (var i = 0; i < 34; i++) {
+      var b = document.createElement('span');
+      var ang = (i / 34) * Math.PI * 2 + Math.random() * 0.4;
+      var dist = reach * (0.35 + Math.random() * 0.65);
+      b.className = 'bit';
+      b.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+      b.style.setProperty('--dy', Math.sin(ang) * dist + 'px');
+      b.style.setProperty('--r', (Math.random() * 540 - 270) + 'deg');
+      b.style.setProperty('--s', (10 + Math.random() * 22) + 'px');
+      b.style.setProperty('--t', (900 + Math.random() * 700) + 'ms');
+      b.innerHTML = (i % 3 === 0 ? DIAMOND : HEART).replace('{c}', i % 4 === 1 ? '#111111' : '#6D1A2B');
+      bits.appendChild(b);
+    }
+    // Let the pieces finish flying over the note before removing them.
+    range.parentNode.parentNode.appendChild(bits);
+    var r = heart.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
+    bits.style.left = (r.left - s.left + r.width / 2) + 'px';
+    bits.style.top = (r.top - s.top + r.height / 2) + 'px';
+    setTimeout(function () { if (bits.parentNode) bits.parentNode.removeChild(bits); }, 1800);
+  }
+
+  // Drag the arrow up, or just tap / click / press Enter and it flies.
+  var moved = false;
+  arrow.addEventListener('pointerdown', function (e) {
+    if (done) return;
+    e.preventDefault();
+    try { arrow.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+    var startY = e.clientY, start = up; moved = false;
+    function move(ev) { var d = startY - ev.clientY; if (Math.abs(d) > 4) moved = true; set(start + d); }
+    function end() {
+      arrow.removeEventListener('pointermove', move);
+      arrow.removeEventListener('pointerup', end);
+      arrow.removeEventListener('pointercancel', end);
+      if (!done && (!moved || up > goal() * 0.35)) shoot();   // a tap, or a decent pull, sends it
+      else if (!done) set(0);
+    }
+    arrow.addEventListener('pointermove', move);
+    arrow.addEventListener('pointerup', end);
+    arrow.addEventListener('pointercancel', end);
+  });
+  arrow.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowUp') { e.preventDefault(); shoot(); }
+  });
+  // Scrolling or swiping up anywhere also sends it.
+  play.addEventListener('wheel', function (e) { e.preventDefault(); if (e.deltaY !== 0) shoot(); }, { passive: false });
+  play.addEventListener('pointerdown', function (e) {
+    if (done || e.target.closest('button')) return;
+    var y0 = e.clientY;
+    function end(ev) {
+      window.removeEventListener('pointerup', end); window.removeEventListener('pointercancel', end);
+      if (y0 - ev.clientY > 30) shoot();
+    }
+    window.addEventListener('pointerup', end); window.addEventListener('pointercancel', end);
+  });
+  window.addEventListener('resize', function () { if (!done) set(up); });
+})();
+</script>
+</body>
+</html>

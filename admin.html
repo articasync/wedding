@@ -58,7 +58,7 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .filters{display:flex;gap:6px 18px;flex-wrap:wrap;margin-bottom:14px}
 .filters button[aria-pressed="true"]{text-decoration-thickness:3px;font-weight:500}
 .scroll{overflow-x:auto;border:1px solid var(--ink)}
-table{border-collapse:collapse;width:100%;min-width:760px;font-size:15px}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:15px}
 th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--ink)}
 tr:last-child td{border-bottom:0}
 th{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;background:var(--tint)}
@@ -158,7 +158,7 @@ td.addr,td.nt{white-space:pre-line;max-width:240px}
         </div>
         <div class="scroll" tabindex="0" role="region" aria-label="Replies table">
           <table>
-            <thead><tr><th scope="col">Name</th><th scope="col">Reply</th><th scope="col">Party</th><th scope="col">Email</th><th scope="col">Mobile</th><th scope="col">Address</th><th scope="col">Note</th></tr></thead>
+            <thead><tr><th scope="col">Name</th><th scope="col">Reply</th><th scope="col">Party</th><th scope="col">Plus one</th><th scope="col">Email</th><th scope="col">Mobile</th><th scope="col">Address</th><th scope="col">Note</th></tr></thead>
             <tbody id="rows"></tbody>
           </table>
         </div>
@@ -181,7 +181,7 @@ td.addr,td.nt{white-space:pre-line;max-width:240px}
 
   var SAMPLE = {
     rsvps: [
-      { when: '2026-11-10T15:00:00Z', name: 'Sample Guest One', email: 'one@example.com', phone: '(555) 010-0001', address: '1 Sample Street\nNew York, NY 10001', attending: 'yes', party: 2, note: 'Vegetarian, please.' },
+      { when: '2026-11-10T15:00:00Z', name: 'Sample Guest One', email: 'one@example.com', phone: '(555) 010-0001', address: '1 Sample Street\nNew York, NY 10001', attending: 'yes', party: 2, note: 'Vegetarian, please.', guestName: 'Sample Plus One', guestPhone: '(555) 010-0009', guestEmail: 'plusone@example.com' },
       { when: '2026-11-11T15:00:00Z', name: 'Sample Guest Two', email: 'two@example.com', phone: '', address: '2 Sample Avenue\nBrooklyn, NY 11201', attending: 'yes', party: 1, note: '' },
       { when: '2026-11-12T15:00:00Z', name: 'Sample Guest Three', email: 'three@example.com', phone: '(555) 010-0003', address: '3 Sample Road\nChicago, IL 60601', attending: 'no', party: 0, note: 'So sorry to miss it!' }
     ],
@@ -216,10 +216,18 @@ td.addr,td.nt{white-space:pre-line;max-width:240px}
     if (digits.length === 11 && digits.charAt(0) === '1') return '+' + digits;
     return '';
   }
+  function withPlusOnes(rsvps) {
+    var out = [];
+    rsvps.forEach(function (r) {
+      out.push(r);
+      if (r.attending === 'yes' && (r.guestEmail || r.guestPhone)) out.push({ name: r.guestName, email: r.guestEmail, phone: r.guestPhone });
+    });
+    return out;
+  }
   function recipients(audience, channel, testTo) {
     var key = channel === 'sms' ? 'phone' : 'email', people = [];
     if (audience === 'test') { var p = { name: 'Test' }; p[key] = String(testTo || ''); people = [p]; }
-    else if (audience === 'yes' || audience === 'no') people = data.rsvps.filter(function (r) { return r.attending === audience; });
+    else if (audience === 'yes' || audience === 'no') people = withPlusOnes(data.rsvps.filter(function (r) { return r.attending === audience; }));
     else if (audience === 'pending') {
       var answered = {};
       data.rsvps.forEach(function (r) {
@@ -230,7 +238,7 @@ td.addr,td.nt{white-space:pre-line;max-width:240px}
         var ph = normalizePhone(g.phone);
         return !(g.email && answered['e:' + g.email.toLowerCase().trim()]) && !(ph && answered['p:' + ph]);
       });
-    } else people = data.guests.concat(data.rsvps);
+    } else people = data.guests.concat(withPlusOnes(data.rsvps));
     var seen = {}, out = [];
     people.forEach(function (p) {
       var to = channel === 'sms' ? normalizePhone(p.phone) : String(p.email || '').toLowerCase().trim();
@@ -281,7 +289,7 @@ td.addr,td.nt{white-space:pre-line;max-width:240px}
     var list = data.rsvps.filter(function (r) { return filter === 'all' || r.attending === filter; });
     list.forEach(function (r) {
       var tr = document.createElement('tr');
-      [[r.name], [r.attending === 'yes' ? 'Attending' : 'Declined'], [r.attending === 'yes' ? String(r.party || 1) : '–'], [r.email], [r.phone], [r.address, 'addr'], [r.note, 'nt']].forEach(function (c) {
+      [[r.name], [r.attending === 'yes' ? 'Attending' : 'Declined'], [r.attending === 'yes' ? String(r.party || 1) : '–'], [[r.guestName, r.guestPhone, r.guestEmail].filter(Boolean).join('\n'), 'addr'], [r.email], [r.phone], [r.address, 'addr'], [r.note, 'nt']].forEach(function (c) {
         var td = document.createElement('td'); td.textContent = c[0] || ''; if (c[1]) td.className = c[1]; tr.appendChild(td);
       });
       body.appendChild(tr);
@@ -301,9 +309,9 @@ td.addr,td.nt{white-space:pre-line;max-width:240px}
       if (/^[=+\-@]/.test(v)) v = "'" + v;           // keep spreadsheets from running it as a formula
       return '"' + v.replace(/"/g, '""') + '"';
     };
-    var lines = [['Name', 'Reply', 'Party size', 'Email', 'Mobile', 'Address', 'Note', 'Replied at'].map(cell).join(',')];
+    var lines = [['Name', 'Reply', 'Party size', 'Plus one', 'Plus one mobile', 'Plus one email', 'Email', 'Mobile', 'Address', 'Note', 'Replied at'].map(cell).join(',')];
     data.rsvps.forEach(function (r) {
-      lines.push([r.name, r.attending === 'yes' ? 'Yes' : 'No', r.party, r.email, r.phone, r.address, r.note, r.when].map(cell).join(','));
+      lines.push([r.name, r.attending === 'yes' ? 'Yes' : 'No', r.party, r.guestName, r.guestPhone, r.guestEmail, r.email, r.phone, r.address, r.note, r.when].map(cell).join(','));
     });
     var url = URL.createObjectURL(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
     var a = document.createElement('a'); a.href = url; a.download = 'rsvps.csv'; document.body.appendChild(a); a.click(); a.remove();

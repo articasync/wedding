@@ -78,7 +78,7 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .page-head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px;border-bottom:1px solid var(--ink);padding-bottom:clamp(16px,2.4vw,28px);margin-bottom:clamp(28px,4.5vw,56px)}
 .page-head h1{font-family:var(--display);font-weight:400;font-size:clamp(56px,10.5vw,128px);line-height:.92;letter-spacing:-.03em}
 .page-head h1 i{font-style:italic}
-.page-head p{max-width:320px;text-align:right}
+.page-head p{max-width:460px;text-align:right}
 @media (max-width:720px){.page-head{grid-template-columns:1fr}.page-head p{text-align:left}}
 .lede{font-size:clamp(18px,1.9vw,21px);max-width:60ch}
 
@@ -138,6 +138,8 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .choice span{display:block;border:1px solid var(--ink);padding:18px 14px;text-align:center;font-family:var(--display);font-style:italic;font-size:clamp(20px,2.2vw,26px);line-height:1.1;transition:background .2s,color .2s}
 .choice input:checked + span{background:var(--ink);color:var(--paper)}
 .choice input:focus-visible + span{outline:2px solid var(--ink);outline-offset:4px}
+.guest-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px 28px;margin-top:16px;border-left:1px solid var(--ink);padding-left:20px}
+@media (max-width:820px){.guest-grid{grid-template-columns:1fr}}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .status{grid-column:1/-1;min-height:1.6em}
 .status.err{border-left:3px solid var(--ink);padding-left:12px}
@@ -203,11 +205,11 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   <symbol id="fig-bride" viewBox="0 0 120 220">
     <path d="M26 30 Q60 -6 94 30 L108 170 Q60 150 12 170 Z" fill="#ffffff" fill-opacity="0.6" stroke="#111111" stroke-width="1"/>
     <rect x="24" y="12" width="72" height="84" rx="22" fill="#17120f"/>
-    <rect x="31" y="22" width="58" height="54" rx="15" fill="#8B5A3A"/>
+    <rect x="31" y="22" width="58" height="54" rx="15" fill="#BF9468"/>
     <path d="M31 40 Q31 18 60 18 Q89 18 89 40 Q72 26 52 30 Q40 32 31 40Z" fill="#17120f"/>
     <circle cx="49" cy="50" r="3" fill="#17120f"/><circle cx="71" cy="50" r="3" fill="#17120f"/>
     <path d="M52 62 Q60 68 68 62" stroke="#17120f" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <rect x="27" y="84" width="13" height="44" rx="6.5" fill="#8B5A3A"/><rect x="80" y="84" width="13" height="44" rx="6.5" fill="#8B5A3A"/>
+    <rect x="27" y="84" width="13" height="44" rx="6.5" fill="#BF9468"/><rect x="80" y="84" width="13" height="44" rx="6.5" fill="#BF9468"/>
     <rect x="39" y="80" width="42" height="42" rx="7" fill="#ffffff" stroke="#111111" stroke-width="1.5"/>
     <path d="M39 118 H81 L104 212 H16 Z" fill="#ffffff" stroke="#111111" stroke-width="1.5" stroke-linejoin="round"/>
     <circle cx="60" cy="126" r="9" fill="#111111"/>
@@ -221,7 +223,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     <path d="M53 84 L60 88 L67 84 V94 L60 90 L53 94Z" fill="#161616"/>
     <rect x="31" y="22" width="58" height="54" rx="15" fill="#F2D6C2" stroke="#111111" stroke-width="1"/>
     <path d="M29 38 Q29 12 60 12 Q91 12 91 38 Q76 24 56 28 Q40 30 29 38Z" fill="#E2BE6A"/>
-    <circle cx="49" cy="50" r="3" fill="#17120f"/><circle cx="71" cy="50" r="3" fill="#17120f"/>
+    <circle cx="49" cy="50" r="3.4" fill="#2E6FBE"/><circle cx="71" cy="50" r="3.4" fill="#2E6FBE"/>
     <path d="M52 62 Q60 68 68 62" stroke="#17120f" stroke-width="2" fill="none" stroke-linecap="round"/>
   </symbol>
   <symbol id="ph" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -246,7 +248,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
       <div class="rope" id="rope"></div>
       <button type="button" class="fig" id="bride" aria-label="Mariam. Drag right, or press the right arrow key, to move her toward Chris."><svg aria-hidden="true"><use href="#fig-bride"/></svg></button>
       <button type="button" class="fig" id="groom" aria-label="Chris. Drag left, or press the left arrow key, to move him toward Mariam."><svg aria-hidden="true"><use href="#fig-groom"/></svg></button>
-      <svg class="heart" id="heart" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 30 C4 20 2 13 5 8 C8 3 14 4 17 9 C20 4 26 3 29 8 C32 13 30 20 17 30Z" fill="#111111"/></svg>
+      <svg class="heart" id="heart" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 30 C4 20 2 13 5 8 C8 3 14 4 17 9 C20 4 26 3 29 8 C32 13 30 20 17 30Z" fill="#6D1A2B"/></svg>
     </div>
     <div class="gate-foot">
       <span class="label where">Terrace on the Park</span>
@@ -308,12 +310,13 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     <section class="page" id="p-rsvp" hidden>
       <div class="page-head">
         <h1 tabindex="-1"><i>R.S.V.P.</i></h1>
-        <p class="label">Kindly reply by April 15, 2027</p>
+        <p class="label">Kindly reply by December 5, 2026</p>
       </div>
       <div class="rsvp-grid">
         <div class="rsvp-side">
           <p class="big">We’d love to celebrate with you.</p>
-          <p>Please reply for yourself and, if your invitation includes one, your guest. You can come back and change your answer any time before April 15 — just use the same email address.</p>
+          <p>Please reply for yourself and your plus one. We’ve saved a seat beside you for someone special, and we’d love to meet whoever you’d like to bring. If you’d rather come on your own, that’s completely fine too — just let us know below.</p>
+          <p style="margin-top:14px">You can come back and change your answer any time before February 1 — just use the same email address.</p>
         </div>
         <div>
           <form id="rsvp-form" novalidate>
@@ -337,13 +340,32 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
             <div class="field" id="party-field" hidden>
               <label for="f-party">How many of you?</label>
               <select id="f-party" name="party">
+                <option value="2">Me and my plus one</option>
                 <option value="1">Just me</option>
-                <option value="2">Me and my guest</option>
               </select>
             </div>
             <div class="field">
               <label for="f-phone">Mobile <small>(optional, for day-of updates)</small></label>
               <input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+            </div>
+            <div class="field wide" id="guest-fields" hidden>
+              <fieldset>
+                <legend class="label">Your plus one</legend>
+                <div class="guest-grid">
+                  <div class="field">
+                    <label for="f-gname">Their full name</label>
+                    <input id="f-gname" name="guestName" type="text" autocomplete="off" maxlength="120">
+                  </div>
+                  <div class="field">
+                    <label for="f-gphone">Their mobile <small>(optional)</small></label>
+                    <input id="f-gphone" name="guestPhone" type="tel" autocomplete="off" maxlength="40">
+                  </div>
+                  <div class="field wide">
+                    <label for="f-gemail">Their email <small>(optional)</small></label>
+                    <input id="f-gemail" name="guestEmail" type="email" autocomplete="off" maxlength="200">
+                  </div>
+                </div>
+              </fieldset>
             </div>
             <div class="field wide">
               <label for="f-address">Mailing address</label>
@@ -381,7 +403,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
           <p>52-11 111th Street<br>Flushing Meadows Corona Park<br>Queens, NY 11368</p>
           <div class="links">
             <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&amp;query=Terrace+On+The+Park%2C+52-11+111th+St%2C+Queens%2C+NY+11368">Open in Google Maps</a>
-            <a class="btn ghost" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Mariam+%26+Chris+%E2%80%94+Wedding&amp;dates=20270514T223000Z/20270515T033000Z&amp;location=Terrace+On+The+Park%2C+52-11+111th+St%2C+Queens%2C+NY+11368&amp;details=Doors+open+at+6%3A30+PM.+Creative+black+tie.">Add to calendar</a>
+            <a class="btn ghost" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Mariam+%26+Chris+%E2%80%94+Wedding&amp;dates=20270514T220000Z/20270515T033000Z&amp;location=Terrace+On+The+Park%2C+52-11+111th+St%2C+Queens%2C+NY+11368&amp;details=Doors+open+at+6%3A00+PM.+Ceremony+at+6%3A30+PM+sharp.+Creative+black+tie.">Add to calendar</a>
           </div>
         </div>
         <div class="map">
@@ -450,16 +472,16 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   ];
 
   var SCHEDULE = [
-    { time: '6:30 PM', until: 'to 7:00 PM', title: 'Ceremony & Reception', text: 'Don’t miss the “I do’s”! Doors open at 6:30 PM, and the ceremony will start right on time at 7:00 PM. Please plan to arrive by 6:30/35 PM so you have plenty of time to park, drop off your coat, hit the restroom, and settle in!', tag: 'Creative Black Tie' },
+    { time: '6:00 PM', until: 'ceremony at 6:30 sharp', title: 'Ceremony & Reception', text: 'Don’t miss the “I do’s”! Doors open at 6 PM, and the ceremony will start sharp at 6:30 PM. Please plan to arrive by 6:00/05 PM so you have plenty of time to drop off your coat, hit the restroom, and settle in!', tag: 'Creative Black Tie' },
     { time: '7:00 PM', until: 'to 8:00 PM', title: 'Cocktail Hour', text: 'All of our guests will have open bar.' },
     { time: '8:00 PM', until: 'to 9:30 PM', title: 'Dinner', text: '' },
     { time: '9:00 PM', until: 'to 11:30 PM', title: 'Dancing', text: '' },
-    { time: 'TBA', until: 'the morning after', title: 'Post-Wedding Brunch', text: 'If you’re staying an extra day, join us for breakfast near The Greenwich Hotel! More details coming soon.' }
+    { time: 'TBA', until: 'the morning after', title: 'Post-Wedding Brunch', text: 'If you’re staying an extra day, join us for breakfast near X. TBD' }
   ];
 
   var QA = [
-    { q: 'What’s the RSVP deadline?', a: 'Please RSVP by April 15 so we can get an accurate headcount. :)' },
-    { q: 'Can I bring a date?', a: 'Check your invitation to see if you have a +1!' },
+    { q: 'What’s the RSVP deadline?', a: 'Please RSVP by December 5 so we can get an accurate headcount. :)' },
+    { q: 'Can I bring a date?', a: 'Yes! We’ve saved a seat for everyone to bring a plus one. Just add their name when you RSVP.' },
     { q: 'Are kids welcome?', a: 'We love your little ones, but the ceremony and reception are adults-only. However, we know some of you will be traveling with kids, so they’re welcome at the Friday cocktail reception and Sunday brunch! We’ll also offer babysitting at the venue during the ceremony if you need it. Please reach out if you have any questions!' },
     { q: 'Where can I park?', a: 'There’s plenty of parking near the venue entrance.' },
     { q: 'Are the ceremony and reception spaces wheelchair accessible?', a: 'Yes! We’ll also have a cart available for anyone who needs help getting around the property.' },
@@ -479,7 +501,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     { src: '', alt: '', ratio: '3/4' }, { src: '', alt: '', ratio: '3/2' }, { src: '', alt: '', ratio: '4/5' }
   ];
 
-  var TICKER = ['Friday, the fourteenth of May', 'Terrace on the Park', 'New York', 'Creative black tie', 'Doors at half past six'];
+  var TICKER = ['Friday, the fourteenth of May', 'Terrace on the Park', 'New York', 'Creative black tie', 'Doors at six'];
 
   /* ===================================================================== */
 
@@ -729,6 +751,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   form.addEventListener('change', function () {
     var v = form.elements.attending.value;
     $('party-field').hidden = v !== 'yes';
+    $('guest-fields').hidden = !(v === 'yes' && form.elements.party.value === '2');
   });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -737,12 +760,19 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
       action: 'rsvp',
       name: f.name.value.trim(), email: f.email.value.trim(), phone: f.phone.value.trim(),
       address: f.address.value.trim(), attending: f.attending.value, party: f.party.value,
-      note: f.note.value.trim(), website: f.website.value
+      note: f.note.value.trim(), website: f.website.value,
+      guestName: '', guestPhone: '', guestEmail: ''
     };
+    var plusOne = data.attending === 'yes' && data.party === '2';
+    if (plusOne) {
+      data.guestName = f.guestName.value.trim(); data.guestPhone = f.guestPhone.value.trim(); data.guestEmail = f.guestEmail.value.trim();
+    }
     if (!data.name) { setStatus('Please tell us your name.', true); f.name.focus(); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) { setStatus('Please enter a valid email address.', true); f.email.focus(); return; }
     if (!data.attending) { setStatus('Please let us know if you can make it.', true); f.attending[0].focus(); return; }
     if (!data.address) { setStatus('Please add your mailing address.', true); f.address.focus(); return; }
+    if (plusOne && !data.guestName) { setStatus('Please add your plus one’s name, or choose “Just me”.', true); f.guestName.focus(); return; }
+    if (plusOne && data.guestEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.guestEmail)) { setStatus('Please check your plus one’s email address.', true); f.guestEmail.focus(); return; }
 
     if (!BACKEND) {
       setStatus('Preview mode: the form isn’t connected to the Google Sheet yet, so this reply was not saved.', true);

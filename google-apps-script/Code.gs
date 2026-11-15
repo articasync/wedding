@@ -15,7 +15,7 @@
 var RSVP_SHEET = 'RSVPs';
 var GUEST_SHEET = 'Guests';
 var LOG_SHEET = 'Blast log';
-var RSVP_HEADERS = ['Timestamp', 'Name', 'Email', 'Phone', 'Address', 'Attending', 'Party size', 'Note'];
+var RSVP_HEADERS = ['Timestamp', 'Name', 'Email', 'Phone', 'Address', 'Attending', 'Party size', 'Note', 'Guest name', 'Guest email', 'Guest phone'];
 var GUEST_HEADERS = ['Name', 'Email', 'Phone'];
 var LOG_HEADERS = ['Timestamp', 'Channel', 'Audience', 'Subject', 'Sent', 'Failed'];
 var SENDER_NAME = 'Mariam & Chris';
@@ -74,6 +74,9 @@ function saveRsvp_(req) {
   var attending = String(req.attending || '').toLowerCase();
   var note = clean_(req.note, 1000);
   var party = Math.round(Number(req.party) || 1);
+  var guestName = clean_(req.guestName, 120);
+  var guestEmail = clean_(req.guestEmail, 200).toLowerCase();
+  var guestPhone = clean_(req.guestPhone, 40);
 
   if (!name) throw new Error('Please tell us your name.');
   if (!isEmail_(email)) throw new Error('Please enter a valid email address.');
@@ -81,8 +84,10 @@ function saveRsvp_(req) {
   if (!address) throw new Error('Please add your mailing address.');
   if (party < 1 || party > MAX_PARTY) party = 1;
   if (attending === 'no') party = 0;
+  if (guestEmail && !isEmail_(guestEmail)) throw new Error('Please check your plus one’s email address.');
+  if (party < 2) { guestName = ''; guestEmail = ''; guestPhone = ''; }
 
-  var row = [new Date(), name, email, phone, address, attending === 'yes' ? 'Yes' : 'No', party, note].map(safeCell_);
+  var row = [new Date(), name, email, phone, address, attending === 'yes' ? 'Yes' : 'No', party, note, guestName, guestEmail, guestPhone].map(safeCell_);
 
   var lock = LockService.getScriptLock();
   lock.waitLock(15000);
@@ -138,7 +143,10 @@ function listAll_() {
         address: String(r[4] || ''),
         attending: String(r[5] || '').toLowerCase() === 'yes' ? 'yes' : 'no',
         party: Number(r[6]) || 0,
-        note: String(r[7] || '')
+        note: String(r[7] || ''),
+        guestName: String(r[8] || ''),
+        guestEmail: String(r[9] || ''),
+        guestPhone: String(r[10] || '')
       };
     }),
     guests: readRows_(GUEST_SHEET, GUEST_HEADERS).map(function (r) {
@@ -158,7 +166,7 @@ function recipients_(audience, channel, data, testTo) {
     p[key] = String(testTo || '');
     people = [p];
   } else if (audience === 'yes' || audience === 'no') {
-    people = data.rsvps.filter(function (r) { return r.attending === audience; });
+    people = withPlusOnes_(data.rsvps.filter(function (r) { return r.attending === audience; }));
   } else if (audience === 'pending') {
     var answered = {};
     data.rsvps.forEach(function (r) {
@@ -171,7 +179,7 @@ function recipients_(audience, channel, data, testTo) {
       return !(g.email && answered['e:' + g.email.toLowerCase().trim()]) && !(ph && answered['p:' + ph]);
     });
   } else if (audience === 'all') {
-    people = data.guests.concat(data.rsvps);
+    people = data.guests.concat(withPlusOnes_(data.rsvps));
   } else {
     throw new Error('Unknown audience');
   }
@@ -183,6 +191,16 @@ function recipients_(audience, channel, data, testTo) {
     if (!to || (channel === 'email' && !isEmail_(to)) || seen[to]) return;
     seen[to] = true;
     out.push({ to: to, name: String(p.name || '') });
+  });
+  return out;
+}
+
+/** Adds each attending guest's plus one (when they left contact details) as a person of their own. */
+function withPlusOnes_(rsvps) {
+  var out = [];
+  rsvps.forEach(function (r) {
+    out.push(r);
+    if (r.attending === 'yes' && (r.guestEmail || r.guestPhone)) out.push({ name: r.guestName, email: r.guestEmail, phone: r.guestPhone });
   });
   return out;
 }
@@ -254,8 +272,9 @@ function sheet_(name, headers) {
   if (sh.getLastRow() === 0) {
     sh.appendRow(headers);
     sh.setFrozenRows(1);
-    var phoneCol = headers.indexOf('Phone') + 1;
-    if (phoneCol > 0) sh.getRange(1, phoneCol, sh.getMaxRows(), 1).setNumberFormat('@');
+    headers.forEach(function (h, i) {
+      if (/phone/i.test(h)) sh.getRange(1, i + 1, sh.getMaxRows(), 1).setNumberFormat('@');
+    });
   }
   return sh;
 }
