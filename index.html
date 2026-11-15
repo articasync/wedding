@@ -18,7 +18,7 @@
   --pad:clamp(20px,4.6vw,56px);
 }
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;font-weight:400}
 body.locked{overflow:hidden}
 a{color:inherit;text-underline-offset:5px}
@@ -70,11 +70,11 @@ h1[tabindex="-1"]:focus{outline:none}
 .top{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--ink);padding:16px var(--pad)}
 .top ul{list-style:none;margin:0;padding:0;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:6px clamp(14px,2.6vw,32px)}
 .top a{display:block;padding:8px 0;text-decoration:none}
-.top a[aria-current="page"]{text-decoration:underline;text-underline-offset:7px}
-@media (max-width:720px){.top ul{justify-content:center}}
+.top a[aria-current]{text-decoration:underline;text-underline-offset:7px}
+@media (max-width:720px){.top{padding-top:8px;padding-bottom:8px}.top ul{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;gap:0 22px;margin:0 calc(var(--pad) * -1);padding:0 var(--pad)}.top ul::-webkit-scrollbar{display:none}.top a{white-space:nowrap;padding:12px 0}}
 main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
-.page{animation:rise .6s ease both}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+.page{scroll-margin-top:calc(var(--head,70px) + 20px)}
+.page + .page{margin-top:clamp(72px,11vw,150px)}
 .page-head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px;border-bottom:1px solid var(--ink);padding-bottom:clamp(16px,2.4vw,28px);margin-bottom:clamp(28px,4.5vw,56px)}
 .page-head h1{font-family:var(--display);font-weight:400;font-size:clamp(56px,10.5vw,128px);line-height:.92;letter-spacing:-.03em}
 .page-head h1 i{font-style:italic}
@@ -207,6 +207,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important}
+  html{scroll-behavior:auto}
 }
 </style>
 </head>
@@ -287,7 +288,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 
   <main>
     <!-- welcome -->
-    <section class="page" id="p-welcome" hidden>
+    <section class="page" id="welcome">
       <div class="hero">
         <h1 tabindex="-1">Welcome<br>to our <i>love</i><br><i>story!</i></h1>
         <div class="date-col">
@@ -309,17 +310,16 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     </section>
 
     <!-- story -->
-    <section class="page" id="p-story" hidden>
+    <section class="page" id="story">
       <div class="page-head">
         <h1 tabindex="-1">Our <i>story</i></h1>
-        <p class="label">A few favourite chapters, so far</p>
       </div>
       <div id="moments"></div>
       <div class="asked" id="asked"></div>
     </section>
 
     <!-- rsvp -->
-    <section class="page" id="p-rsvp" hidden>
+    <section class="page" id="rsvp">
       <div class="page-head">
         <h1 tabindex="-1"><i>R.S.V.P.</i></h1>
         <p class="label">Kindly reply by December 5, 2026</p>
@@ -402,7 +402,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     </section>
 
     <!-- schedule -->
-    <section class="page" id="p-schedule" hidden>
+    <section class="page" id="schedule">
       <div class="page-head">
         <h1 tabindex="-1">The <i>day</i></h1>
         <p class="label">Friday, May 14, 2027</p>
@@ -425,28 +425,25 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     </section>
 
     <!-- q & a -->
-    <section class="page" id="p-qa" hidden>
+    <section class="page" id="qa">
       <div class="page-head">
         <h1 tabindex="-1">Q <i>&amp;</i> A</h1>
-        <p class="label">If you have a question, start here</p>
       </div>
       <div class="qa" id="qa-list"></div>
     </section>
 
     <!-- gallery -->
-    <section class="page" id="p-gallery" hidden>
+    <section class="page" id="gallery">
       <div class="page-head">
         <h1 tabindex="-1"><i>Gallery</i></h1>
-        <p class="label">More of us</p>
       </div>
       <div class="wall" id="wall"></div>
     </section>
 
     <!-- registry -->
-    <section class="page" id="p-registry" hidden>
+    <section class="page" id="registry">
       <div class="page-head">
         <h1 tabindex="-1"><i>Registry</i></h1>
-        <p class="label">Your presence is the gift</p>
       </div>
       <div class="reg">
         <div class="reg-count">
@@ -626,21 +623,33 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   $('lightbox-close').addEventListener('click', function () { lightbox.close(); });
   lightbox.addEventListener('click', function (e) { if (e.target === lightbox) lightbox.close(); });
 
-  /* ---------------- pages ---------------- */
-  // Sections use p-<name> ids so the browser doesn't jump-scroll to them under the sticky header.
+  /* ---------------- one long page: the menu jumps to each section ---------------- */
   var PAGES = ['welcome', 'story', 'rsvp', 'schedule', 'qa', 'gallery', 'registry'];
   var links = document.querySelectorAll('.top a');
-  function show(id, focus) {
-    if (PAGES.indexOf(id) < 0) id = 'welcome';
-    PAGES.forEach(function (p) { $('p-' + p).hidden = p !== id; });
+  var topBar = document.querySelector('.top');
+  function headH() { return topBar.offsetHeight || 70; }
+  function setHead() { document.documentElement.style.setProperty('--head', headH() + 'px'); }
+  var currentId = '';
+  function spy() {
+    var line = headH() + 40, id = PAGES[0];
+    PAGES.forEach(function (p) { if ($(p).getBoundingClientRect().top <= line) id = p; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) id = PAGES[PAGES.length - 1];
+    if (id === currentId) return;
+    currentId = id;
     Array.prototype.forEach.call(links, function (a) {
-      if (a.getAttribute('href') === '#' + id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      if (a.getAttribute('href') === '#' + id) {
+        a.setAttribute('aria-current', 'location');
+        var ul = a.closest('ul');
+        if (ul && ul.scrollWidth > ul.clientWidth) ul.scrollLeft = a.offsetLeft - ul.offsetLeft - (ul.clientWidth - a.offsetWidth) / 2;
+      } else a.removeAttribute('aria-current');
     });
-    window.scrollTo(0, 0);
-    if (focus) { var h = $('p-' + id).querySelector('h1'); if (h) h.focus({ preventScroll: true }); }
   }
-  window.addEventListener('hashchange', function () { show(location.hash.slice(1), true); });
-  show(location.hash.slice(1), false);
+  function goToHash() {
+    var id = location.hash.slice(1);
+    if (PAGES.indexOf(id) > 0) $(id).scrollIntoView();
+  }
+  window.addEventListener('scroll', spy, { passive: true });
+  window.addEventListener('resize', function () { setHead(); spy(); });
 
   /* ---------------- countdown ---------------- */
   function tick() {
@@ -709,9 +718,10 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     site.hidden = false;
     document.body.classList.remove('locked');
     gate.classList.add('open');
+    setHead(); goToHash(); spy();
     var finish = function () {
       gate.hidden = true;
-      var h = document.querySelector('.page:not([hidden]) h1');
+      var h = $(currentId || 'welcome').querySelector('h1');
       if (h) h.focus({ preventScroll: true });
     };
     if (reduced) finish(); else setTimeout(finish, 1150);
@@ -769,11 +779,12 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   });
 
   $('skip').addEventListener('click', function () { if (!met) { met = true; openSite(); } });
-  $('relock').addEventListener('click', function () { store('mc-open', null); location.hash = '#welcome'; location.reload(); });
+  $('relock').addEventListener('click', function () { store('mc-open', null); history.replaceState(null, '', location.pathname); window.scrollTo(0, 0); location.reload(); });
   window.addEventListener('resize', measure);
 
   if (store('mc-open') === '1') {
     met = true; gate.hidden = true; site.hidden = false; document.body.classList.remove('locked');
+    setHead(); goToHash(); spy();
   } else {
     measure();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
