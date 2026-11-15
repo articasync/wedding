@@ -35,14 +35,14 @@ h1[tabindex="-1"]:focus{outline:none}
 .btn.ghost{background:transparent;color:var(--ink)}
 .btn.ghost:hover{background:var(--ink);color:var(--paper)}
 .btn[disabled]{opacity:.5;cursor:default}
-.cats{position:fixed;right:16px;bottom:12px;z-index:9;width:236px;height:96px;pointer-events:none}
-.cats .kit{position:absolute;left:0;bottom:0;width:32px;height:26px;will-change:transform}
-.cats .mom{position:absolute;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:auto;text-decoration:none;color:var(--ink)}
+.cats{position:fixed;left:0;top:0;right:0;bottom:0;z-index:9;pointer-events:none;overflow:hidden}
+.cats .kit,.cats .mom{position:absolute;left:0;top:0;will-change:transform}
+.cats .kit{width:46px;height:38px}
+.cats .mom{display:flex;flex-direction:column;align-items:center;gap:0;pointer-events:auto;text-decoration:none;color:var(--ink)}
 .cats .mom:hover{color:var(--ink)}
-.cats .mom svg{display:block;width:54px;height:58px}
-.cats .mom span{font-size:11px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;line-height:1.4;white-space:nowrap;text-shadow:0 0 6px var(--paper),0 0 2px var(--paper)}
-@media (max-width:720px){.cats{right:10px;bottom:8px;width:190px}}
-footer{padding-bottom:120px !important}
+.cats .mom svg{display:block;width:92px;height:76px}
+.cats .mom span{font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;line-height:1.4;white-space:nowrap;text-shadow:0 0 6px var(--paper),0 0 2px var(--paper)}
+@media (max-width:720px){.cats .mom svg{width:72px;height:60px}.cats .kit{width:38px;height:31px}}
 
 /* ---------- the gate ---------- */
 #gate{position:fixed;inset:0;z-index:50;background:var(--paper);height:100vh;height:100dvh;display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:clamp(18px,4vh,40px) var(--pad);touch-action:none;-webkit-user-select:none;user-select:none;overflow:hidden;transition:transform 1.1s cubic-bezier(.7,0,.2,1)}
@@ -317,8 +317,8 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     <svg class="kit" viewBox="0 2 64 52" aria-hidden="true"><use href="#cat-kitten"/></svg>
     <svg class="kit" viewBox="0 2 64 52" aria-hidden="true"><use href="#cat-kitten"/></svg>
     <a class="mom" href="#rsvp">
+      <svg viewBox="0 2 64 52" aria-hidden="true"><use href="#cat-kitten"/></svg>
       <span>RSVP now</span>
-      <svg viewBox="8 2 56 60" aria-hidden="true"><use href="#cat-mom"/></svg>
     </a>
   </div>
 
@@ -652,32 +652,55 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   }
   window.addEventListener('hashchange', function () { show(location.hash.slice(1), true); });
 
-  // The cat family in the corner: mom sits and links to the RSVP form, three kittens play beside her.
+  // The cat family: the mother runs all over the screen with three kittens chasing her; she links to the RSVP form.
   var flutter = $('flutter'), flDone = store('mc-rsvped') === '1';
   function flutterVisible() {
     flutter.hidden = flDone || site.hidden || currentId === 'rsvp';
   }
   (function () {
     var kits = flutter.querySelectorAll('.kit');
-    var moves = [{ sp: 0.55, ph: 0, hop: 0.9 }, { sp: 0.38, ph: 2.1, hop: 0.7 }, { sp: 0.47, ph: 4.2, hop: 1.1 }];
-    var t = 0, last = null;
+    var mom = flutter.querySelector('.mom'), momSvg = mom.querySelector('svg');
+    var t = 0, last = null, paused = false;
+    // Where the mother is at a given moment: a looping path that sweeps the whole screen.
+    function at(tt) {
+      var top = headH() + 6;
+      var w = Math.max(0, window.innerWidth - mom.offsetWidth - 8);
+      var h = Math.max(0, window.innerHeight - top - mom.offsetHeight - 8);
+      var a = tt * 0.46 + 1.2;
+      return { x: 4 + w * (0.5 + 0.5 * Math.sin(a)), y: top + h * (0.5 + 0.5 * Math.sin(tt * 0.29)), dir: Math.cos(a) < 0 ? -1 : 1 };
+    }
     function place() {
-      var range = Math.max(0, flutter.clientWidth - 54 - 32 - 10);
+      var m = at(t), stride = Math.sin(t * 8);
+      mom.style.transform = 'translate(' + m.x.toFixed(1) + 'px,' + (m.y - Math.abs(stride) * 7).toFixed(1) + 'px)';
+      momSvg.style.transform = 'scaleX(' + m.dir + ') rotate(' + (stride * 5).toFixed(1) + 'deg)';
+      var drop = momSvg.clientHeight - kits[0].clientHeight;          // kittens run along the same ground line
       Array.prototype.forEach.call(kits, function (k, i) {
-        var m = moves[i], a = t * m.sp + m.ph;
-        var x = range * (0.5 + 0.5 * Math.sin(a));
-        var hop = Math.pow(Math.max(0, Math.sin(t * m.hop + m.ph * 1.7)), 8) * 16;   // an occasional little jump
-        var dir = Math.cos(a) < 0 ? -1 : 1;                                          // face the way it is walking
-        k.style.transform = 'translate(' + x.toFixed(1) + 'px,' + (-hop).toFixed(1) + 'px) scaleX(' + dir + ') rotate(' + (-hop * 0.8).toFixed(1) + 'deg)';
+        var tt = t - 0.42 * (i + 1);                                   // each kitten trails a little further behind
+        var p = at(tt), st = Math.sin(tt * 10 + i * 1.3);
+        var x = p.x + (mom.offsetWidth - k.clientWidth) / 2;
+        var y = p.y + drop - Math.abs(st) * 9;
+        k.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scaleX(' + p.dir + ') rotate(' + (st * 7).toFixed(1) + 'deg)';
       });
     }
     function fly(now) {
-      if (last !== null && !flutter.hidden) { t += Math.min(0.05, (now - last) / 1000); place(); }
+      if (last !== null && !paused && !flutter.hidden) { t += Math.min(0.05, (now - last) / 1000); place(); }
       last = now;
       requestAnimationFrame(fly);
     }
-    if (reduced) { t = 3; flutter.hidden = false; place(); flutter.hidden = true; }
-    else requestAnimationFrame(fly);
+    if (reduced) {
+      // No running for visitors who prefer less motion: the family waits in the corner.
+      flutter.hidden = false;
+      var x = window.innerWidth - mom.offsetWidth - 16, y = window.innerHeight - mom.offsetHeight - 14;
+      mom.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      Array.prototype.forEach.call(kits, function (k, i) {
+        k.style.transform = 'translate(' + (x - (i + 1) * (k.clientWidth + 4)) + 'px,' + (y + momSvg.clientHeight - k.clientHeight) + 'px)';
+      });
+      flutter.hidden = true;
+    } else {
+      ['mouseenter', 'focus'].forEach(function (ev) { mom.addEventListener(ev, function () { paused = true; }); });
+      ['mouseleave', 'blur'].forEach(function (ev) { mom.addEventListener(ev, function () { paused = false; }); });
+      requestAnimationFrame(fly);
+    }
   })();
 
   /* ---------------- countdown ---------------- */
