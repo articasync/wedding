@@ -127,6 +127,9 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .step p{max-width:46ch;font-size:18px;line-height:1.7}
 .step .lede{font-family:var(--display);font-style:italic;font-size:clamp(28px,3.2vw,42px);line-height:1.15}
 .step .step-tag{font-size:13px}
+.polaroid{margin:10px 0 0;max-width:340px;background:#fff;padding:12px 12px 0;border:1px solid #E2DFD6;transform:rotate(-1.5deg)}
+.polaroid img{display:block;width:100%;height:auto}
+.polaroid figcaption{font-family:var(--display);font-style:italic;font-size:20px;text-align:center;padding:10px 0 14px}
 .shot{margin:6px 0 0;border:1px solid var(--ink);overflow-x:auto;background:var(--paper)}
 .shot img{display:block;width:100%;min-width:640px;height:auto}
 .shot figcaption{padding:8px 10px;border-top:1px solid var(--ink)}
@@ -152,9 +155,10 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .m-pin{opacity:.3}
 .m-card,.m-doodle{opacity:0}
 [data-step="1"] .p-tao,[data-step="1"] .c-tao,
-[data-step="2"] .d-text,
-[data-step="3"] .p-fifth,[data-step="3"] .c-fifth,[data-step="3"] .d-fifth,
-[data-step="4"] .p-croq,[data-step="4"] .c-croq,[data-step="4"] .d-croq,[data-step="4"] .m-route{opacity:1}
+[data-step="2"] .p-fifth,[data-step="2"] .c-fifth,[data-step="2"] .d-fifth,
+[data-step="3"] .p-croq,[data-step="3"] .c-croq,[data-step="3"] .d-croq,[data-step="3"] .m-route,
+[data-step="4"] .d-bryant,[data-step="5"] .d-cancun{opacity:1}
+[data-step="5"] .m-pin{opacity:0}
 @media (max-width:820px){
   .story{grid-template-columns:minmax(0,1fr);gap:0}
   .story-map{order:0;top:var(--head,60px);height:auto;z-index:3;background:var(--paper);padding:6px 0 10px;margin:0 calc(var(--pad) * -1);padding-left:var(--pad);padding-right:var(--pad)}
@@ -466,26 +470,6 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 <text x="608" y="402.2" text-anchor="middle" class="m-tiny">Square</text>
 <g transform="translate(690 470)"><path d="M0 -16 L5 4 L0 0 L-5 4 Z" fill="#111111"/><text x="0" y="17" text-anchor="middle" class="m-tiny">N</text></g>
 <path class="m-route" d="M184 345 C240 250 330 150 489 66 C600 150 620 330 516 443" />
-<g class="m-doodle d-text">
-  <g transform="translate(250 36)">
-    <rect width="230" height="196" class="m-cardbox"/>
-    <rect x="150" y="26" width="80" height="170" class="m-park"/>
-    <text x="190" y="104" text-anchor="middle" class="m-tiny">Central</text><text x="190" y="115" text-anchor="middle" class="m-tiny">Park</text>
-    <line x1="0" y1="54" x2="150" y2="54" class="m-st"/><text x="4" y="51" class="m-tiny">75 St</text><line x1="0" y1="86" x2="150" y2="86" class="m-st"/><text x="4" y="83" class="m-tiny">74 St</text><line x1="0" y1="118" x2="150" y2="118" class="m-st"/><text x="4" y="115" class="m-tiny">73 St</text><line x1="0" y1="150" x2="150" y2="150" class="m-st"/><text x="4" y="147" class="m-tiny">72 St</text>
-    <line x1="35" y1="26" x2="35" y2="196" class="m-av"/><line x1="90" y1="26" x2="90" y2="196" class="m-av"/><line x1="150" y1="26" x2="150" y2="196" class="m-av"/>
-    <text x="86" y="44" transform="rotate(-90 86 44)" text-anchor="end" class="m-tiny">Columbus Av</text>
-    <rect x="0" y="0" width="230" height="22" fill="#FAFAF7"/><line x1="0" y1="22" x2="230" y2="22" stroke="#111111" stroke-width="0.6"/>
-    <text x="10" y="15" class="m-tiny">Upper West Side</text>
-    <g transform="translate(128 118) scale(0.85)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><circle cx="0" cy="-21" r="3.6" fill="#FAFAF7"/></g>
-    <rect x="4" y="158" width="142" height="34" fill="#FAFAF7"/>
-    <text x="10" y="173" class="m-name" style="font-size:14px">Mariam’s apartment</text>
-    <text x="10" y="187" class="m-tiny">28 W 73rd St</text>
-  </g>
-  <path d="M250 120 C180 120 110 110 50 86" class="m-dash"/><path d="M50 86 l6.2 6.6 M50 86 l9 -0.5" class="m-dash"/>
-  <text x="54" y="70" class="m-note">Chris, in Minnesota</text>
-  <g transform="translate(64 290)"><rect width="182" height="30" rx="15" class="m-bubble"/><path d="M28 30 l-6 10 l14 -10" class="m-bubble"/><text x="91" y="19.5" text-anchor="middle" class="m-say">10 Questions in 10 Minutes</text></g>
-  <g transform="translate(210 330)"><rect width="196" height="30" rx="15" class="m-bubble"/><path d="M168 30 l8 10 l-14 -10" class="m-bubble"/><text x="98" y="19.5" text-anchor="middle" class="m-say">“Little Hill Chris” · “Gnocchi”</text></g>
-</g>
 <g class="m-doodle d-fifth">
   <g transform="translate(400 124)"><path d="M0 22 A24 22 0 0 1 48 22 Z" class="m-line"/><path d="M8 10 H40 M3 16 H45 M24 0 V22 M14 3 V10 M34 3 V10" class="m-line" stroke-width="0.8"/></g>
   <text x="424" y="164" text-anchor="middle" class="m-note">the igloos</text>
@@ -493,6 +477,46 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 <g class="m-doodle d-croq">
   <g transform="translate(318 470)"><path d="M0 26 L40 26 L40 12 Z" class="m-line"/><path d="M0 26 L40 12 L40 6 L0 20 Z" class="m-line"/><path d="M20 4 c-2 -4 -8 -2 -6 2 l6 6 l6 -6 c2 -4 -4 -6 -6 -2 z" fill="#6D1A2B"/></g>
   <text x="368" y="494" class="m-note">the cheesecake</text>
+</g>
+<g class="m-doodle d-bryant">
+  <g transform="translate(250 36)">
+    <rect width="230" height="196" class="m-cardbox"/>
+    <line x1="0" y1="64" x2="230" y2="64" class="m-st"/><text x="6" y="60" class="m-tiny">42 St</text>
+    <line x1="0" y1="150" x2="230" y2="150" class="m-st"/><text x="6" y="146" class="m-tiny">40 St</text>
+    <rect x="58" y="64" width="78" height="86" class="m-park"/>
+    <rect x="136" y="72" width="30" height="70" fill="#D8D4C7" stroke="#B7B2A4" stroke-width="0.8"/>
+    <text x="151" y="110" transform="rotate(-90 151 110)" text-anchor="middle" class="m-tiny">Library</text>
+    <line x1="58" y1="22" x2="58" y2="196" class="m-av"/><line x1="176" y1="22" x2="176" y2="196" class="m-av"/>
+    <text x="62" y="186" class="m-tiny">6 Av</text><text x="180" y="186" class="m-tiny">5 Av</text>
+    <text x="97" y="134" text-anchor="middle" class="m-tiny">Bryant Park</text>
+    <rect x="0" y="0" width="230" height="22" fill="#FAFAF7"/><line x1="0" y1="22" x2="230" y2="22" stroke="#111111" stroke-width="0.6"/>
+    <text x="10" y="15" class="m-tiny">Midtown · 14 blocks north</text>
+    <g transform="translate(97 112)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">4</text></g>
+  </g>
+  <g transform="translate(250 240)"><rect width="230" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">Bryant Park</text><text x="12" y="36" class="m-tiny">The official launch</text></g>
+</g>
+<g class="m-doodle d-cancun">
+  <rect width="720" height="540" fill="#FAFAF7" opacity="0.82"/>
+  <path d="M120 70 C260 40 300 120 222 158" class="m-dash"/><path d="M222 158 l1 -9 m-1 9 l8 -4" class="m-dash"/>
+  <text x="66" y="62" class="m-note">from New York</text>
+  <g transform="translate(200 150)">
+    <rect width="320" height="290" class="m-cardbox"/>
+    <rect x="0" y="0" width="320" height="24" fill="#FAFAF7"/><line x1="0" y1="24" x2="320" y2="24" stroke="#111111" stroke-width="0.6"/>
+    <text x="12" y="16" class="m-tiny">Cancún, Mexico</text>
+    <g transform="translate(0 40)">
+      <path d="M0 52 H118 M202 52 H320" class="m-line"/>
+      <path d="M18 52 V42" class="m-line"/><circle cx="18" cy="36" r="6" fill="#E4E1D6" stroke="#111111" stroke-width="1.1"/><path d="M44 52 V38" class="m-line"/><circle cx="44" cy="30" r="8" fill="#E4E1D6" stroke="#111111" stroke-width="1.1"/><path d="M80 52 V43" class="m-line"/><circle cx="80" cy="38" r="5" fill="#E4E1D6" stroke="#111111" stroke-width="1.1"/><path d="M236 52 V40" class="m-line"/><circle cx="236" cy="33" r="7" fill="#E4E1D6" stroke="#111111" stroke-width="1.1"/><path d="M268 52 V44" class="m-line"/><circle cx="268" cy="39" r="5" fill="#E4E1D6" stroke="#111111" stroke-width="1.1"/><path d="M298 52 V38" class="m-line"/><circle cx="298" cy="30" r="8" fill="#E4E1D6" stroke="#111111" stroke-width="1.1"/>
+      <path d="M118 52 C104 88 70 120 76 160 C84 196 236 196 244 160 C250 120 216 88 202 52" fill="#F3F1EA" stroke="#111111" stroke-width="1.3"/>
+      <path d="M86 150 C120 144 200 144 234 150 C232 172 210 184 160 184 C110 184 88 172 86 150 Z" fill="#E4E1D6"/>
+      <path d="M96 160 q8 -4 16 0 t16 0 M176 166 q8 -4 16 0 t16 0" class="m-line" stroke-width="0.8"/>
+      <circle cx="152" cy="152" r="1.8" fill="#111111"/><circle cx="160" cy="152" r="1.8" fill="#111111"/>
+      <path d="M156 136 v6 M153 139 h6" class="m-line" stroke-width="0.8"/>
+      <path d="M160 58 V110" class="m-dash" stroke-width="0.8"/>
+      <text x="166" y="96" class="m-note" style="font-size:11px">squint</text>
+    </g>
+    <text x="16" y="256" class="m-name" style="font-size:18px">Cenote 97</text>
+    <text x="16" y="274" class="m-tiny">Our first trip together</text>
+  </g>
 </g>
 <g class="m-pin p-tao" transform="translate(184 366)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">1</text></g>
 <g class="m-pin p-fifth" transform="translate(489 86)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">2</text></g>
@@ -509,20 +533,27 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
         <div class="step" data-step="1">
           <p class="label step-tag">01 · Tao Downtown</p>
           <p>Every great romantic comedy begins with a protagonist who has completely given up on love, and for me, Mariam, that scene took place at a club Tao Downtown, venting to my friend Sam for the 55th time about the wasteland that is Manhattan dating. Sam, finally DONE, offered up a guy she’d gone on two completely platonic dates with. Her pitch? "He’s smart, he runs, and he needs a stylist." Honestly, after the men I had been dating, "has a brain" felt like a peak achievement, so I agreed to the setup.</p>
-        </div>
-        <div class="step" data-step="2">
           <p>What followed was a two-week Thanksgiving texting montage. He invented a game called 10 Questions in 10 Minutes, where I tried to catch him off-guard by asking for his childhood nickname. When he confessed it was "Little Hill Chris" and "Gnocchi," I practically swooned. An honest, vulnerable, and smart king???</p>
           <p>Between discussing Bell’s theorem and his architectural plans to install a waterslide through our future home, I realized I was falling for him, so I channeled my inner boss and asked him point-blank when he was going to take me out.</p>
           <figure class="shot"><img src="images/first-text.png" alt="Our first messages, November 2018" loading="lazy"><figcaption class="label">Our first messages, November 2018</figcaption></figure>
         </div>
-        <div class="step" data-step="3">
+        <div class="step" data-step="2">
           <p class="label step-tag">02 · 230 Fifth</p>
           <p>Our first date was at 230 Fifth in the igloos on November 30th—and by then, there was no turning back.</p>
         </div>
-        <div class="step" data-step="4">
+        <div class="step" data-step="3">
           <p class="label step-tag">03 · La Maison du Croque Monsieur</p>
           <p>Three months later, he asked me to be his girlfriend at La Maison du Croque Monsieur with a cheesecake reading, "Will you be my girlfriend?" Honestly, we had been practically glued to each other for weeks at that point, so the question felt less like a dramatic cliffhanger and more like a formal concession to reality. By then, I had already become the honorary fourth roommate in a house full of men who genuinely did not understand that you have to scrub mold, that empty Hennessy bottles do not count as interior design, and that any sane woman walking through that front door would immediately assume she had wandered into a frat house.</p>
           <p>Somehow, we survived the bachelor pad, upgraded the decor, and turned a hand-me-down setup into the easiest "yes" of my life.</p>
+        </div>
+        <div class="step" data-step="4">
+          <p class="label step-tag">04 · Bryant Park</p>
+          <p>Then came the official launch: our first photo together at Bryant Park, full of pure, unbothered geeking out and just soaking in the joy of finally being seen together.</p>
+          <figure class="polaroid"><img src="images/bryant-park.jpg" alt="Mariam and Chris sitting together on the lawn at Bryant Park" loading="lazy"><figcaption>Bryant Park</figcaption></figure>
+        </div>
+        <div class="step" data-step="5">
+          <p class="label step-tag">05 · Cenote 97, Cancún</p>
+          <p>Right on the heels of that came our first trip together in Cancun, where, even if you have to squint at the tiny glimmering dots down in the cenote below, we were living our best lives. Chris generously paid for the whole trip like a dream, yet still refused to spend $30 on a steak. The "economist" in me (all hail undergrad) diagnosed it immediately: his steak indifference curve had already hit a wall, and he was clearly experiencing diminishing marginal utility on beef after already buying me paradise. I knew this hilarious and weird man was becoming more than a boyfriend, but it didn't know how.</p>
         </div>
       </div>
     </section>
