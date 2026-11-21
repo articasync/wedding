@@ -120,7 +120,7 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .story-map{order:2;position:sticky;top:calc(var(--head,70px) + 16px);height:calc(100vh - var(--head,70px) - 32px);display:flex;align-items:center}
 .map-svg{display:block;width:100%;height:auto;max-height:100%;border:1px solid var(--ink);background:#F3F1EA}
 .story-steps{order:1}
-[data-step="4"] .m-pin,[data-step="5"] .m-pin,[data-step="6"] .m-pin{opacity:0}
+[data-step="4"] .m-pin,[data-step="5"] .m-pin,[data-step="6"] .m-pin,[data-step="7"] .m-pin{opacity:0}
 .step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:4vh 0;opacity:.28;transition:opacity .5s ease}
 .step.on{opacity:1}
 .step:first-child{min-height:44vh}
@@ -158,9 +158,9 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .m-pin{opacity:.3}
 .m-card,.m-doodle{opacity:0}
 [data-step="1"] .p-tao,[data-step="1"] .c-tao,
-[data-step="2"] .p-fifth,[data-step="2"] .c-fifth,[data-step="2"] .d-fifth,
-[data-step="3"] .p-croq,[data-step="3"] .c-croq,[data-step="3"] .d-croq,
-[data-step="4"] .d-bryant,[data-step="5"] .d-cancun,[data-step="6"] .d-ritz{opacity:1}
+[data-step="2"] .p-fifth,[data-step="2"] .c-fifth,
+[data-step="3"] .p-croq,[data-step="3"] .c-croq,
+[data-step="4"] .d-bryant,[data-step="5"] .d-cancun,[data-step="6"] .d-ritz,[data-step="7"] .d-bk{opacity:1}
 [data-step="5"] .m-pin{opacity:0}
 @media (max-width:820px){
   .story{grid-template-columns:minmax(0,1fr);gap:0}
@@ -400,7 +400,7 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     <section class="page" id="p-story" hidden>
       <div class="page-head">
         <h1 tabindex="-1">Our <i>story</i></h1>
-        <p class="label">8 years in</p>
+        <p class="label" style="color:var(--wine)">8 years in</p>
       </div>
       <div class="story">
         <div class="story-map">
@@ -473,35 +473,6 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 <text x="608" y="391.2" text-anchor="middle" class="m-tiny">Union</text>
 <text x="608" y="402.2" text-anchor="middle" class="m-tiny">Square</text>
 <g transform="translate(690 470)"><path d="M0 -16 L5 4 L0 0 L-5 4 Z" fill="#111111"/><text x="0" y="17" text-anchor="middle" class="m-tiny">N</text></g>
-<g class="m-doodle d-fifth">
-  <g transform="translate(400 124)"><path d="M0 22 A24 22 0 0 1 48 22 Z" class="m-line"/><path d="M8 10 H40 M3 16 H45 M24 0 V22 M14 3 V10 M34 3 V10" class="m-line" stroke-width="0.8"/></g>
-  <text x="424" y="164" text-anchor="middle" class="m-note">the igloos</text>
-</g>
-<g class="m-doodle d-croq">
-  <g transform="translate(318 470)"><path d="M0 26 L40 26 L40 12 Z" class="m-line"/><path d="M0 26 L40 12 L40 6 L0 20 Z" class="m-line"/><path d="M20 4 c-2 -4 -8 -2 -6 2 l6 6 l6 -6 c2 -4 -4 -6 -6 -2 z" fill="#6D1A2B"/></g>
-  <text x="368" y="494" class="m-note">the cheesecake</text>
-</g>
-<g class="m-doodle d-cancun">
-  <rect width="720" height="540" fill="#FAFAF7" opacity="0.85"/>
-  <path d="M120 70 C240 40 290 90 236 116" class="m-dash"/><path d="M236 116 l2 -9 m-2 9 l9 -2" class="m-dash"/>
-  <text x="66" y="62" class="m-note">from New York</text>
-  <g transform="translate(180 120)">
-    <rect width="360" height="330" fill="#F3F1EA" stroke="#111111" stroke-width="1"/>
-    <path d="M250 24 C262 90 236 150 244 210 C250 260 226 300 232 330 H360 V24 Z" fill="#E4E1D6"/>
-    <path d="M262 52 L318 52 L314 66 C300 120 296 200 270 280 L258 280 C282 200 290 120 300 66 L262 66 Z" fill="#F3F1EA" stroke="#B7B2A4" stroke-width="0.8"/>
-    <text x="336" y="200" transform="rotate(-90 336 200)" text-anchor="middle" class="m-water">Caribbean Sea</text>
-    <text x="276" y="176" transform="rotate(-80 276 176)" text-anchor="middle" class="m-tiny">Hotel Zone</text>
-    <path d="M0 96 H236 M30 150 H244 M60 220 H246" class="m-st"/>
-    <path d="M196 92 C190 160 176 240 168 330" class="m-av" stroke-width="2"/>
-    <text x="150" y="300" transform="rotate(-84 150 300)" class="m-tiny">Hwy 307</text>
-    <circle cx="200" cy="90" r="4" fill="#111111"/><text x="190" y="80" text-anchor="end" class="m-name" style="font-size:15px">Cancún</text>
-    <circle cx="214" cy="252" r="3" fill="#6E6A60"/><text x="222" y="256" class="m-tiny">Airport</text>
-    <g transform="translate(186 184)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">5</text></g>
-    <rect x="0" y="0" width="360" height="24" fill="#FAFAF7"/><line x1="0" y1="24" x2="360" y2="24" stroke="#111111" stroke-width="0.6"/>
-    <text x="12" y="16" class="m-tiny">Cancún, Mexico</text>
-  </g>
-  <g transform="translate(196 286)"><rect width="150" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">Cenote 97</text><text x="12" y="36" class="m-tiny">Our first trip</text></g>
-</g>
 <g class="m-doodle d-ritz">
 <rect width="720" height="540" fill="#F3F1EA"/>
 <path d="M0 0 H38 C46 60 34 120 42 180 C50 240 36 300 44 360 C52 420 38 480 44 540 H0 Z" fill="#E4E1D6"/>
@@ -567,6 +538,50 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
 <g transform="translate(690 470)"><path d="M0 -16 L5 4 L0 0 L-5 4 Z" fill="#111111"/><text x="0" y="17" text-anchor="middle" class="m-tiny">N</text></g>
 <g transform="translate(300 268)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">6</text></g>
 <g transform="translate(90 226)"><rect width="196" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">The Ritz Plaza</text><text x="12" y="36" class="m-tiny">235 W 48th St · our studio</text></g>
+</g>
+<g class="m-doodle d-bk">
+<rect width="720" height="540" fill="#F3F1EA"/>
+<path d="M600 40 H720 V540 H600 Z" class="m-park"/>
+<text x="660" y="290" transform="rotate(-90 660 290)" text-anchor="middle" class="m-hood">Prospect Park</text>
+<path d="M46 40 C54 120 40 200 50 280 C58 360 44 440 52 540" fill="none" stroke="#B9B4A6" stroke-width="5" stroke-linecap="round"/>
+<text x="30" y="300" transform="rotate(-90 30 300)" text-anchor="middle" class="m-water">Gowanus Canal</text>
+<line x1="70" y1="70" x2="600" y2="70" class="m-st"/>
+<line x1="70" y1="104" x2="600" y2="104" class="m-st"/>
+<line x1="70" y1="138" x2="600" y2="138" class="m-st"/>
+<line x1="70" y1="172" x2="600" y2="172" class="m-st"/>
+<line x1="70" y1="206" x2="600" y2="206" class="m-st"/>
+<line x1="70" y1="240" x2="600" y2="240" class="m-st"/>
+<line x1="70" y1="274" x2="600" y2="274" class="m-st"/>
+<line x1="70" y1="308" x2="600" y2="308" class="m-st"/>
+<line x1="70" y1="342" x2="600" y2="342" class="m-st"/>
+<line x1="70" y1="376" x2="600" y2="376" class="m-st"/>
+<line x1="70" y1="410" x2="600" y2="410" class="m-st"/>
+<line x1="70" y1="444" x2="600" y2="444" class="m-st"/>
+<line x1="70" y1="478" x2="600" y2="478" class="m-st"/>
+<line x1="110" y1="40" x2="110" y2="540" class="m-av"/>
+<text x="110" y="32" text-anchor="middle" class="m-tiny">4 Av</text>
+<line x1="220" y1="40" x2="220" y2="540" class="m-av"/>
+<text x="220" y="32" text-anchor="middle" class="m-tiny">5 Av</text>
+<line x1="320" y1="40" x2="320" y2="540" class="m-av"/>
+<text x="320" y="32" text-anchor="middle" class="m-tiny">6 Av</text>
+<line x1="420" y1="40" x2="420" y2="540" class="m-av"/>
+<text x="420" y="32" text-anchor="middle" class="m-tiny">7 Av</text>
+<line x1="510" y1="40" x2="510" y2="540" class="m-av"/>
+<text x="510" y="32" text-anchor="middle" class="m-tiny">8 Av</text>
+<line x1="592" y1="40" x2="592" y2="540" class="m-av"/>
+<text x="592" y="32" text-anchor="middle" class="m-tiny">Prospect Park W</text>
+<text x="116" y="66" class="m-tiny">Union St</text>
+<text x="116" y="134" class="m-tiny">Carroll St</text>
+<text x="116" y="202" class="m-tiny">1 St</text>
+<text x="116" y="236" class="m-tiny">2 St</text>
+<text x="116" y="270" class="m-tiny">3 St</text>
+<text x="116" y="338" class="m-tiny">5 St</text>
+<text x="116" y="406" class="m-tiny">7 St</text>
+<text x="116" y="474" class="m-tiny">9 St</text>
+<text x="420" y="420" text-anchor="middle" class="m-hood" style="paint-order:stroke;stroke:#F3F1EA;stroke-width:6px">Park Slope</text>
+<g transform="translate(560 500)"><path d="M0 -16 L5 4 L0 0 L-5 4 Z" fill="#111111"/><text x="0" y="17" text-anchor="middle" class="m-tiny">N</text></g>
+<g transform="translate(220 223)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">7</text></g>
+<g transform="translate(236 235)"><rect width="210" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">Brooklyn Animal Action</text><text x="12" y="36" class="m-tiny">Park Slope · where it began</text></g>
 </g>
 <g class="m-doodle d-bryant">
 <rect width="720" height="540" fill="#F3F1EA"/>
@@ -679,6 +694,12 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
           <p>About a year in, we moved into a 400 square foot studio just as COVID hit & I’ve never seen Times Square look more desolate. Outside was a ghost town; inside was 400 square feet of pure spatial negotiation, where I took work calls from the toilet just to find some privacy. Between the apocalyptic streets and four hundred square feet of zero personal space, I briefly wondered if I’d made a huge mistake & until it turned out that if you can survive a 400 square foot lockdown together, you can survive anything.</p>
           <figure class="polaroid"><img src="images/ritz-studio.jpg" alt="Our studio at The Ritz Plaza, with the bed by the window and Times Square buildings outside" loading="lazy"><figcaption>You can’t see it, but we were desperately trying not to kill each other.</figcaption></figure>
           <figure class="polaroid"><img src="images/75k-steps.jpg" alt="Our two watches showing about 75,000 steps in one day" loading="lazy"><figcaption>One of our first extreme adventures, hitting 75K steps or ~35-38mi of walking in a day!</figcaption></figure>
+        </div>
+        <div class="step" data-step="7">
+          <p class="label step-tag">07 · Brooklyn Animal Action</p>
+          <p>~3-4 years in, we officially expanded our family, or rather, I returned to my true calling. Back when I was 8, I ran a Pavlovian street cat syndicate: every time I popped open a can of tuna, I whistled Yankee Doodle (picked up from <i>The Great Escape</i> ofc), until I could step outside, whistle a single bar, and summon 7 cats sprinting toward me like I was the Mansa Musa ushering gold.</p>
+          <p>Naturally, Chris had no choice but to get on board. We adopted our first 2 cats together, and in true New York fashion, we found Luna right on the street in Manhattan, 64 Rutgers to be precise. Our roster has shifted a bit since then: Sable moved on to be the sole cat in a granny's house, and Luna promptly surprised us with six kittens, two of whom never left. Today, we are the proud, outnumbered mommy and daddy of four: Luna, Mr. Purr, Big Bear, and George.</p>
+          <figure class="polaroid"><img src="images/cats.jpg" alt="Two of our black cats curled up together on a plaid blanket" loading="lazy"><figcaption>Two of the four, fully in charge.</figcaption></figure>
         </div>
       </div>
     </section>
