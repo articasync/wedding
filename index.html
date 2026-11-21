@@ -91,6 +91,8 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .lede{font-size:clamp(18px,1.9vw,21px);max-width:60ch}
 
 /* ---------- welcome ---------- */
+#p-story{position:relative;isolation:isolate;margin:calc(clamp(28px,5vw,56px) * -1) calc(var(--pad) * -1) 0;padding:clamp(28px,5vw,56px) var(--pad) 0}
+#p-story::before{content:"";position:absolute;left:0;right:0;top:0;height:min(70vh,620px);z-index:-1;background:url("images/kiss-bg.jpg") 68% 62%/cover no-repeat;opacity:.3;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
 #p-welcome{position:relative;isolation:isolate;margin:calc(clamp(28px,5vw,56px) * -1) calc(var(--pad) * -1) 0;padding:clamp(28px,5vw,56px) var(--pad) clamp(36px,6vw,72px)}
 #p-welcome::before{content:"";position:absolute;inset:0;z-index:-1;background:url("images/welcome.jpg") center 28%/cover no-repeat;opacity:.3;-webkit-mask-image:linear-gradient(#000 72%,transparent);mask-image:linear-gradient(#000 72%,transparent)}
 .hero{position:relative;display:grid;grid-template-columns:1fr minmax(240px,300px);gap:clamp(24px,4vw,48px);align-items:end;min-height:min(56vh,520px)}
@@ -406,7 +408,6 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
         <div class="story-steps">
         <div class="step" data-step="0">
           <p class="lede">People always ask how we met, &amp; the truth is, Chris was basically a peer reviewed Hinge referral. Here’s the story, told a few New York(ish) places at a time:</p>
-          <figure class="photo"><img src="images/kiss.jpg" alt="Mariam and Chris kissing" loading="lazy"></figure>
         </div>
         <article class="step chap" data-step="1">
           <div class="chap-side">
