@@ -120,7 +120,7 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .story-map{order:2;position:sticky;top:calc(var(--head,70px) + 16px);height:calc(100vh - var(--head,70px) - 32px);display:flex;align-items:center}
 .map-svg{display:block;width:100%;height:auto;max-height:100%;border:1px solid var(--ink);background:#F3F1EA}
 .story-steps{order:1}
-[data-step="5"] .m-pin{opacity:0}
+[data-step="5"] .m-pin,[data-step="6"] .m-pin{opacity:0}
 .step{min-height:62vh;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:4vh 0;opacity:.28;transition:opacity .5s ease}
 .step.on{opacity:1}
 .step:first-child{min-height:44vh}
@@ -503,19 +503,21 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   <g transform="translate(196 286)"><rect width="150" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">Cenote 97</text><text x="12" y="36" class="m-tiny">Our first trip</text></g>
 </g>
 <g class="m-doodle d-ritz">
-  <g transform="translate(250 36)">
-    <rect width="230" height="196" class="m-cardbox"/>
-    <line x1="0" y1="70" x2="230" y2="70" class="m-st"/><text x="6" y="66" class="m-tiny">49 St</text>
-    <line x1="0" y1="120" x2="230" y2="120" class="m-st"/><text x="6" y="116" class="m-tiny">48 St</text>
-    <line x1="0" y1="170" x2="230" y2="170" class="m-st"/><text x="6" y="166" class="m-tiny">47 St</text>
-    <line x1="60" y1="22" x2="60" y2="196" class="m-av"/><text x="64" y="188" class="m-tiny">8 Av</text>
-    <line x1="150" y1="22" x2="196" y2="196" class="m-bway"/><text x="150" y="60" transform="rotate(75 150 60)" class="m-tiny">Broadway</text>
-    <path d="M168 120 L230 120 L230 196 L190 196 Z" fill="#E4E1D5"/><text x="214" y="150" text-anchor="middle" class="m-tiny">Times</text><text x="214" y="161" text-anchor="middle" class="m-tiny">Sq</text>
-    <rect x="0" y="0" width="230" height="22" fill="#FAFAF7"/><line x1="0" y1="22" x2="230" y2="22" stroke="#111111" stroke-width="0.6"/>
-    <text x="10" y="15" class="m-tiny">Theater District · up north</text>
-    <g transform="translate(106 120)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">6</text></g>
+  <rect width="720" height="540" fill="#FAFAF7" opacity="0.85"/>
+  <path d="M560 470 C640 380 620 230 548 196" class="m-dash"/><path d="M548 196 l9 1 m-9 -1 l4 8" class="m-dash"/>
+  <text x="566" y="494" class="m-note">from downtown</text>
+  <g transform="translate(180 120)">
+    <rect width="360" height="330" fill="#F3F1EA" stroke="#111111" stroke-width="1"/>
+    <path d="M0 60 H360" class="m-st"/><text x="6" y="56" class="m-tiny">50 St</text><path d="M0 110 H360" class="m-st"/><text x="6" y="106" class="m-tiny">49 St</text><path d="M0 160 H360" class="m-st"/><text x="6" y="156" class="m-tiny">48 St</text><path d="M0 210 H360" class="m-st"/><text x="6" y="206" class="m-tiny">47 St</text><path d="M0 260 H360" class="m-st"/><text x="6" y="256" class="m-tiny">46 St</text><path d="M0 310 H360" class="m-st"/><text x="6" y="306" class="m-tiny">45 St</text><path d="M40 24 V330" class="m-av"/><text x="44" y="40" class="m-tiny">9 Av</text><path d="M120 24 V330" class="m-av"/><text x="124" y="40" class="m-tiny">8 Av</text><path d="M230 24 V330" class="m-av"/><text x="234" y="40" class="m-tiny">7 Av</text><path d="M320 24 V330" class="m-av"/><text x="324" y="40" class="m-tiny">6 Av</text>
+    <path d="M226.0 210 L230 210 L230 330 L250 330 Z" class="m-park"/>
+    <path d="M188.8 24 L250 330" class="m-bway"/>
+    <text x="208.0" y="120" transform="rotate(78.7 208.0 120)" class="m-tiny">Broadway</text>
+    <text x="276" y="292" text-anchor="middle" class="m-name" style="font-size:14px">Times Square</text>
+    <g transform="translate(165 160)"><path d="M0 0 C-3 -8 -11 -12 -11 -21 A11 11 0 1 1 11 -21 C11 -12 3 -8 0 0 Z" fill="#111111"/><text x="0" y="-17" text-anchor="middle" class="m-num">6</text></g>
+    <rect x="0" y="0" width="360" height="24" fill="#FAFAF7"/><line x1="0" y1="24" x2="360" y2="24" stroke="#111111" stroke-width="0.6"/>
+    <text x="12" y="16" class="m-tiny">Theater District, Manhattan</text>
   </g>
-  <g transform="translate(250 240)"><rect width="230" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">The Ritz Plaza</text><text x="12" y="36" class="m-tiny">235 W 48th St · our studio</text></g>
+  <g transform="translate(196 356)"><rect width="196" height="46" class="m-cardbox"/><text x="12" y="20" class="m-name">The Ritz Plaza</text><text x="12" y="36" class="m-tiny">235 W 48th St · our studio</text></g>
 </g>
 <g class="m-doodle d-bryant">
   <g transform="translate(250 36)">
