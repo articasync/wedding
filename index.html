@@ -224,6 +224,8 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 
 /* ---------- q & a ---------- */
 .qa{max-width:980px}
+.qa .qa-group{margin:56px 0 4px;font-weight:400;font-size:13px;color:var(--wine)}
+.qa .qa-group:first-child{margin-top:0}
 .qa details{border-bottom:1px solid var(--ink)}
 .qa summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;padding:20px 0;font-family:var(--display);font-size:clamp(22px,2.7vw,32px);line-height:1.15}
 .qa summary::-webkit-details-marker{display:none}
@@ -675,18 +677,23 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
   ];
 
   var QA = [
-    { q: 'What’s the RSVP deadline?', a: 'Please RSVP by December 15 so we can get an accurate headcount. :)' },
-    { q: 'Can I bring a date?', a: 'Yes! We’ve saved a seat, & a plate, for everyone to bring a plus one, & since dinner is planned around full tables, we’d love for you to use it. Just add their name when you RSVP.' },
-    { q: 'Are kids welcome?', a: 'We love your little ones, but the ceremony & reception are adults only.' },
-    { q: 'What will the wedding be like?', a: 'An evening in a grand ballroom at Terrace on the Park, with dinner, dancing & all of you. There is no bridal party & no religious ceremony. Instead, we will share a ceremony of personal significance & say our vows in front of the people we love.' },
-    { q: 'What’s the dress code?', a: 'Creative black tie: formal, with a fun, expressive twist. Wear the outfit that’s outrageous, or the one you never thought you’d have an occasion for, as long as it isn’t white.' },
-    { q: 'How do I get to & from the venue?', a: 'By subway, take the 7 train to 111 St; from there it’s about a 15 minute walk straight down 111th Street (roughly 45 minutes from Grand Central in all). A taxi or rideshare from Midtown takes about 20 minutes without traffic, & is the easiest way home after midnight. The map on the Schedule page will give you live directions.' },
-    { q: 'What’s the weather like?', a: 'Welcome to New York, out of towners! Mid May is mild: afternoons are usually around 70°F & evenings cool to the mid 50s, with the odd spring shower. We recommend bringing a light jacket or wrap for later in the night. ;)' },
-    { q: 'Is the wedding indoors or outdoors?', a: 'Our ceremony will most likely be outdoors, in a space attached to our venue, & the reception is in a large indoor ballroom. If the weather is inclement, we have an indoor chapel ready for the ceremony.' },
-    { q: 'Can we use our phones & cameras to take photos during the wedding?', a: 'Absolutely! We’d love for you to snap photos & share them with us. We just ask that you don’t take photos during the ceremony.' },
-    { q: 'Is the bride changing her name?', a: 'No. In Islamic tradition a woman keeps her family name after marriage, honoring the lineage she was born into. Mariam is keeping hers, & you can simply call us Mariam & Chris.' },
-    { q: 'Do you have a registry?', a: 'Your presence is truly the only gift we need. If you would like to give something, we will pass an envelope on the wedding day for our honeymoon fund.' },
-    { q: 'Who can I reach out to if I have questions?', a: 'If you have any questions, please reach out to the bride & groom directly: Mariam at 240-722-9402 & Chris at 612-963-7950.' }
+    { group: 'The Vibe & Guests', items: [
+      { q: 'What’s the RSVP deadline?', a: 'Please RSVP by December 15 so we can get an accurate headcount. :)' },
+      { q: 'Can I bring a date?', a: 'Yes! We’ve saved a seat, & a plate, for everyone to bring a plus one, & since dinner is planned around full tables, we’d love for you to use it. Just add their name when you RSVP.' },
+      { q: 'Are kids welcome?', a: 'We love your little ones, but the ceremony & reception are adults only.' },
+      { q: 'What’s the dress code?', a: 'Creative black tie: formal, with a fun, expressive twist. Wear the outfit that’s outrageous, or the one you never thought you’d have an occasion for, as long as it isn’t white.' },
+      { q: 'What will the wedding be like?', a: 'An evening at Terrace on the Park with dinner, dancing & all of you. Our ceremony will most likely be outdoors, in a space attached to the venue, with an indoor chapel ready in case of bad weather, & the reception is in a grand indoor ballroom. There is no bridal party & no religious ceremony. Instead, we will share a ceremony of personal significance & say our vows in front of the people we love.' }
+    ] },
+    { group: 'Getting There & Venue', items: [
+      { q: 'How do I get to & from the venue?', a: 'By subway, take the 7 train to 111 St; from there it’s about a 15 minute walk straight down 111th Street (roughly 45 minutes from Grand Central in all). A taxi or rideshare from Midtown takes about 20 minutes without traffic, & is the easiest way home after midnight. The map on the Schedule page will give you live directions.' },
+      { q: 'What’s the weather like?', a: 'Welcome to New York, out of towners! Mid May is mild: afternoons are usually around 70°F & evenings cool to the mid 50s, with the odd spring shower. We recommend bringing a light jacket or wrap for later in the night. ;)' }
+    ] },
+    { group: 'Good to Know', items: [
+      { q: 'Can we use our phones & cameras to take photos during the wedding?', a: 'Absolutely! We’d love for you to snap photos & share them with us. We just ask that you don’t take photos during the ceremony.' },
+      { q: 'Is the bride changing her name?', a: 'No. In Islamic tradition a woman keeps her family name after marriage, honoring the lineage she was born into. Mariam is keeping hers, & you can simply call us Mariam & Chris.' },
+      { q: 'Do you have a registry?', a: 'Your presence is truly the only gift we need. If you would like to give something, we will pass an envelope on the wedding day for our honeymoon fund.' },
+      { q: 'Who can I reach out to if I have questions?', a: 'If you have any questions, please reach out to the bride & groom directly: Mariam at 240-722-9402 & Chris at 612-963-7950.' }
+    ] }
   ];
 
   /* ===================================================================== */
@@ -734,8 +741,11 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     if (e.text) body.appendChild(el('p', { text: e.text }));
     $('events').appendChild(el('li', { class: 'event' }, [time, body]));
   });
-  QA.forEach(function (x) {
-    $('qa-list').appendChild(el('details', null, [el('summary', { text: x.q }), el('p', { text: x.a })]));
+  QA.forEach(function (grp) {
+    $('qa-list').appendChild(el('h2', { class: 'label qa-group', text: grp.group }));
+    grp.items.forEach(function (x) {
+      $('qa-list').appendChild(el('details', null, [el('summary', { text: x.q }), el('p', { text: x.a })]));
+    });
   });
   /* ---------------- pages: one section shows at a time ---------------- */
   // Sections use p-<name> ids so the browser doesn't jump-scroll to them under the menu.
