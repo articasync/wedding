@@ -151,6 +151,8 @@ main{flex:1;padding:clamp(28px,5vw,56px) var(--pad) clamp(48px,7vw,88px)}
 .chap .polaroid{max-width:200px;margin-top:4px}
 .chap .polaroid figcaption{font-size:15px;padding:8px 0 10px}
 .chap .photo-row{gap:16px}
+.polaroid:not(:has(figcaption)){padding-bottom:12px}
+.chap .kid-note{font-family:var(--display);font-style:italic;font-size:19px;margin:2px 0 0}
 .chap .photo-row .polaroid{flex:0 1 200px;max-width:200px}
 .route-nav{display:flex;justify-content:space-between;gap:12px;margin-top:18px}
 .route-nav button{border:1px solid var(--ink);background:var(--paper);padding:10px 16px;min-height:44px;font:400 11px/1.3 var(--sans);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;color:var(--ink)}
@@ -461,6 +463,11 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
           </div>
           <div class="chap-body">
           <p>Every great romantic comedy begins with a protagonist ready to retire, &amp; for me, Mariam, that scene took place at Tao Downtown, venting to my friend Sam for about the 55th time about the state of Manhattan dating. Sam, finally DONE with my tired tomes, offered up a guy she’d gone on two platonic dates with. Her pitch? "He’s smart, he runs, &amp; he could use a stylist." I agreed to the setup.</p>
+          <div class="photo-row">
+            <figure class="polaroid"><button type="button" class="zoom" aria-label="Enlarge photo"><img src="images/baby-mariam.jpg" alt="Mariam as a little girl in a lilac jacket" loading="lazy"></button></figure>
+            <figure class="polaroid"><button type="button" class="zoom" aria-label="Enlarge photo"><img src="images/baby-chris.jpg" alt="Chris as a little boy in a homemade Charizard card costume" loading="lazy"></button></figure>
+          </div>
+          <p class="kid-note">Little did these two know they were headed for the same table.</p>
           </div>
         </article>
         <article class="step chap" data-step="2" id="chap-2" hidden>
