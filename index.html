@@ -57,6 +57,17 @@ h1[tabindex="-1"]:focus{outline:none}
 .gate-play{display:flex;flex-direction:column;gap:10px}
 .gate-hint{text-align:center;transition:opacity .2s}
 .stage{position:relative;height:clamp(96px,22vh,170px)}
+.bubble{position:absolute;left:50%;bottom:calc(100% + 54px);transform:translateX(-50%) scale(.6);transform-origin:50% 100%;opacity:0;pointer-events:none;width:min(320px,86vw);background:var(--paper);border:1.5px solid var(--ink);border-radius:22px;padding:16px 18px 14px;box-sizing:border-box;z-index:3;transition:opacity .3s,transform .45s cubic-bezier(.2,1.5,.4,1)}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-11px;width:18px;height:18px;margin-left:-9px;background:var(--paper);border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transform:rotate(45deg)}
+.stage.asking .bubble{opacity:1;transform:translateX(-50%) scale(1);pointer-events:auto}
+.bubble p{margin:0 0 10px;font-family:var(--display);font-style:italic;font-size:21px;line-height:1.2;text-align:center}
+.bubble form{display:flex;gap:8px}
+.bubble input{flex:1;min-width:0;border:0;border-bottom:1px solid var(--ink);background:transparent;font:400 17px/1.4 var(--sans);padding:8px 2px;color:var(--ink);border-radius:0}
+.bubble input:focus{outline:none;border-bottom-width:2px}
+.bubble button{border:0;background:var(--ink);color:var(--paper);font:400 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;padding:0 16px;min-height:44px;cursor:pointer}
+.bubble .pw-err{margin:8px 0 0;font:400 13px/1.3 var(--sans);font-style:normal;color:var(--wine);min-height:1.3em}
+.bubble.shake{animation:shake .4s}
+@keyframes shake{0%,100%{margin-left:0}20%,60%{margin-left:-8px}40%,80%{margin-left:8px}}
 .fig{position:absolute;left:0;bottom:0;height:100%;aspect-ratio:120/220;padding:0;border:0;background:none;cursor:grab;touch-action:none;will-change:transform}
 .fig:active{cursor:grabbing}
 .fig svg{display:block;width:100%;height:100%;pointer-events:none;overflow:visible}
@@ -385,6 +396,15 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
       <div class="rope" id="rope"></div>
       <button type="button" class="fig" id="bride" aria-label="Mariam. Drag right, or press the right arrow key, to move her toward Chris."><svg aria-hidden="true"><use href="#fig-bride"/></svg></button>
       <button type="button" class="fig" id="groom" aria-label="Chris. Drag left, or press the left arrow key, to move him toward Mariam."><svg aria-hidden="true"><use href="#fig-groom"/></svg></button>
+      <div class="bubble" id="bubble" role="dialog" aria-labelledby="pw-q">
+        <p id="pw-q">Psst, what’s the password?</p>
+        <form id="pw-form" autocomplete="off">
+          <label class="sr" for="pw">Password</label>
+          <input id="pw" name="pw" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="go">
+          <button type="submit">Enter</button>
+        </form>
+        <p class="pw-err" id="pw-err" aria-live="polite"></p>
+      </div>
       <svg class="heart" id="heart" viewBox="0 0 34 34" aria-hidden="true"><path d="M17 30 C4 20 2 13 5 8 C8 3 14 4 17 9 C20 4 26 3 29 8 C32 13 30 20 17 30Z" fill="#111111"/></svg>
     </div>
     <div class="gate-foot">
@@ -925,10 +945,34 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     met = true;
     heart.style.left = (bx + fw * 0.94) + 'px';
     stage.classList.add('met');
-    hint.textContent = 'Welcome in';
-    hint.style.opacity = '1';
-    setTimeout(openSite, reduced ? 200 : 1250);
+    hint.style.opacity = '0';
+    if (remembered()) { hint.textContent = 'Welcome back'; hint.style.opacity = '1'; setTimeout(openSite, reduced ? 200 : 1250); return; }
+    setTimeout(ask, reduced ? 100 : 700);
   }
+  // A light lock for casual visitors: the password is checked here in the browser, so it keeps
+  // the site from being stumbled on, but it is not real security.
+  var PW_HASH = 'a2e37e1c';
+  function pwHash(v) { var x = 0x811c9dc5, str = 'mc27|' + v; for (var i = 0; i < str.length; i++) { x ^= str.charCodeAt(i); x = Math.imul(x, 0x01000193) >>> 0; } return x.toString(16); }
+  function remembered() { try { return window.localStorage.getItem('mc-pass') === PW_HASH; } catch (e) { return false; } }
+  function ask() {
+    stage.classList.add('asking');
+    setTimeout(function () { $('pw').focus(); }, reduced ? 0 : 350);
+  }
+  $('pw-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = $('pw').value.trim().toLowerCase(), b = $('bubble');
+    if (pwHash(v) === PW_HASH) {
+      try { window.localStorage.setItem('mc-pass', PW_HASH); } catch (err) { /* private mode */ }
+      $('pw-err').textContent = '';
+      stage.classList.remove('asking');
+      hint.textContent = 'Welcome in'; hint.style.opacity = '1';
+      setTimeout(openSite, reduced ? 100 : 700);
+    } else {
+      $('pw-err').textContent = v ? 'Hmm, not quite. Try again?' : 'Type the password to come in.';
+      b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake');
+      $('pw').select();
+    }
+  });
   function openSite() {
     store('mc-open', '1');
     site.hidden = false;
@@ -994,11 +1038,11 @@ footer button{background:none;border:0;padding:6px 0;cursor:pointer;text-decorat
     window.addEventListener('pointercancel', up);
   });
 
-  $('skip').addEventListener('click', function () { if (!met) { met = true; openSite(); } });
+  $('skip').addEventListener('click', function () { if (!met) { bx = maxT / 2; gx = maxT - bx; draw(); } });
   $('relock').addEventListener('click', function () { store('mc-open', null); history.replaceState(null, '', location.pathname); window.scrollTo(0, 0); location.reload(); });
   window.addEventListener('resize', measure);
 
-  if (store('mc-open') === '1') {
+  if (store('mc-open') === '1' && remembered()) {
     met = true; gate.hidden = true; site.hidden = false; document.body.classList.remove('locked');
     show(location.hash.slice(1), false);
   } else {
